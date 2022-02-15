@@ -70,64 +70,33 @@ class HapticPixelContainer : ObservableObject {
     }
 }
 
-import PositionScrollView
-
-struct HapticPixelScrubber : View, PositionScrollViewDelegate {
+struct HapticPixelScrubber : View {
     @State private var haptics = Haptics()
     private var pixelSpacing: CGFloat = 1
     @ObservedObject var pixels = HapticPixelContainer()
     
-    /// Page size of Scroll
-    var pageSize = CGSize(width: 200, height: 300)
-        
-    // Create PositionScrollViewModel
-    // (Need to create in parent view to bind the state between this view and PositionScrollView)
-    @ObservedObject var psViewModel = PositionScrollViewModel(
-        pageSize: CGSize(width: 200, height: 300),
-        horizontalScroll: Scroll(
-            scrollSetting: ScrollSetting(pageCount: 5, afterMoveType: .fitToNearestUnit),
-            pageLength: 200
-        )
-    )
-    
-    // Delegate methods of PositionScrollView
-    public func onScrollStart() {
-        // if we just started scrubbing, start a continuous event
-        if let pixel = pixels.getHapticPixelOverScrubArea(point: pixels.globalGeo.frame(in: .local).center){
-            if (scrubPlayer.player == nil) {
-                scrubPlayer.start(with: haptics, intensity: pixel.intensity,
-                                  sharpness: pixel.sharpness)
-                print("started continuous player")
-            }
-        }
-    }
-    public func onChangePage(page: Int) {
-        print("onChangePage to page: \(page)")
-    }
-    
-    public func onChangePosition(position: CGFloat) {
-        print("position: \(position)")
-        // if we just started scrubbing, start a continuous event
-        if let pixel = pixels.getHapticPixelOverScrubArea(point: pixels.globalGeo.frame(in: .local).center){
-            if (scrubPlayer.player == nil) {
-                scrubPlayer.start(with: haptics, intensity: pixel.intensity,
-                                  sharpness: pixel.sharpness)
-                print("started continuous player")
-            } else {
-                scrubPlayer.update(intensity: pixel.intensity, sharpness: pixel.sharpness)
-                print("updating continuous player")
-            }
-        }
-    }
-    
-    public func onScrollEnd() {
-        print("onScrollEnd")
-        print("stopping continuous player")
-        scrubPlayer.stop(atTime: 0)
-        scrubPlayer.player = nil
-    }
-    
     @State private var scrubPlayer = ContinuousHapticPlayer()
+    var scrub: some Gesture {
+        DragGesture()
+            .onChanged{ value in
+                // if we just started scrubbing, start a continuous event
+                if let pixel = pixels.getHapticPixelOverScrubArea(point: pixels.globalGeo.frame(in: .local).center){
+                    if (scrubPlayer.player == nil) {
+                        scrubPlayer.start(with: haptics, intensity: pixel.intensity,
+                                          sharpness: pixel.sharpness)
+                        print("started continuous player")
+                    } else {
+                        scrubPlayer.update(intensity: pixel.intensity, sharpness: pixel.sharpness)
+                        print("updating continuous player")
+                    }
+                }
+            }
+            .onEnded { value in
+                print("stopping continuous player")
+                scrubPlayer.stop(atTime: 0)
+                scrubPlayer.player = nil
+            }
+    }
     
     func constructHapticPixelView(for pixel: HapticPixel, with geo: GeometryProxy,
                                   globalGeo: GeometryProxy) -> some View {
@@ -139,25 +108,28 @@ struct HapticPixelScrubber : View, PositionScrollViewDelegate {
     
     var body : some View {
         GeometryReader{ globalGeo in
-            PositionScrollView(viewModel: self.psViewModel,
-                               delegate: self) {
-                LazyHStack(spacing: pixelSpacing) {
-                    ForEach(pixels.pixels) { _pixel in
-                        GeometryReader  { geo in
-                            constructHapticPixelView(for: _pixel, with: geo, globalGeo: globalGeo)
+            ScrollViewReader { scrollProxy in
+                ScrollView(.horizontal) {
+                    LazyHStack(spacing: pixelSpacing) {
+                        ForEach(pixels.pixels) { _pixel in
+                            GeometryReader  { geo in
+                                constructHapticPixelView(for: _pixel, with: geo, globalGeo: globalGeo)
+                            }
                         }
                     }
                 }
+                .simultaneousGesture(scrub)
                 .onAppear(perform: {
                     haptics.prepare()
                     (0...256).forEach({idx in
-                        pixels.pixels.append(
-                            HapticPixel(_intensity: Float.random(in: 0.01...1.0),
-                                        _sharpness: 1.0))
+                        pixels.pixels.append(HapticPixel(_intensity: Float.random(in: 0.01...1.0),
+                                                         _sharpness: 1.0))
                     })
                 }).padding()
             }
             Circle()
+//                .stroke(lineWidth: 2)
+//                .fill(Color("yellow"))
                 .cornerRadius(5)
                 .foregroundColor(.yellow)
                 .position(globalGeo.frame(in: .local).center)
