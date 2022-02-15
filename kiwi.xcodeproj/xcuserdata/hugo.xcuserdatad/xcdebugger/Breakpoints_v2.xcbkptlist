@@ -7,17 +7,97 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "C0294135-74F8-4329-853D-4D0D4D7CACF0"
-            shouldBeEnabled = "Yes"
+            uuid = "91B2FED5-8B07-45E4-AED8-A2011CD08DA6"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "kiwi/Haptics.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "complexSuccess()"
+            startingLineNumber = "146"
+            endingLineNumber = "146"
+            landmarkName = "start(with:intensity:sharpness:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "D0D4AEC2-9962-4B7B-AF7D-6DAB01D1FE44"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "kiwi/ContentView.swift"
+            startingColumnNumber = "29"
+            endingColumnNumber = "29"
+            startingLineNumber = "40"
+            endingLineNumber = "40"
+            landmarkName = "init(_intensity:_sharpness:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "C39796A5-3735-45CC-B656-E2740154B83B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "kiwi/Haptics.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "24"
+            endingLineNumber = "24"
+            landmarkName = "prepare()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "78EEAB26-6498-4C7F-80C7-9F9439324683"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "kiwi/ContentView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "getHapticPixelOverScrubArea(point:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "78EEAB26-6498-4C7F-80C7-9F9439324683 - e1446cc5391dd0ee"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (kiwi.HapticPixel) -&gt; () in kiwi.HapticPixelContainer.getHapticPixelOverScrubArea(point: __C.CGPoint) -&gt; Swift.Optional&lt;kiwi.HapticPixel&gt;"
+                  moduleName = "kiwi"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hugo/journal/winter-22/kiwi/kiwi/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "62"
+                  endingLineNumber = "62"
+                  offsetFromSymbolStart = "96">
+               </Location>
+               <Location
+                  uuid = "78EEAB26-6498-4C7F-80C7-9F9439324683 - e1446cc5391dd0ee"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (kiwi.HapticPixel) -&gt; () in kiwi.HapticPixelContainer.getHapticPixelOverScrubArea(point: __C.CGPoint) -&gt; Swift.Optional&lt;kiwi.HapticPixel&gt;"
+                  moduleName = "kiwi"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/hugo/journal/winter-22/kiwi/kiwi/ContentView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "62"
+                  endingLineNumber = "62"
+                  offsetFromSymbolStart = "316">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

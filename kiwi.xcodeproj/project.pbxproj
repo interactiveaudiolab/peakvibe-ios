@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -14,6 +14,9 @@
 		9A36E10A27A86ED800CF9989 /* kiwiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36E10927A86ED800CF9989 /* kiwiTests.swift */; };
 		9A36E11527A86ED800CF9989 /* kiwiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36E11427A86ED800CF9989 /* kiwiUITests.swift */; };
 		9A36E12327A8837900CF9989 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36E12227A8837900CF9989 /* Haptics.swift */; };
+		9AF559C727BAB88C0094A2E5 /* OSCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9AF559C627BAB88C0094A2E5 /* OSCKit */; };
+		9AF559CC27BB0CA90094A2E5 /* SwiftUITrackableScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = 9AF559CB27BB0CA90094A2E5 /* SwiftUITrackableScrollView */; };
+		9AF559CF27BC4C870094A2E5 /* PositionScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = 9AF559CE27BC4C870094A2E5 /* PositionScrollView */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -54,6 +57,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AF559CF27BC4C870094A2E5 /* PositionScrollView in Frameworks */,
+				9AF559CC27BB0CA90094A2E5 /* SwiftUITrackableScrollView in Frameworks */,
+				9AF559C727BAB88C0094A2E5 /* OSCKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -149,6 +155,11 @@
 			dependencies = (
 			);
 			name = kiwi;
+			packageProductDependencies = (
+				9AF559C627BAB88C0094A2E5 /* OSCKit */,
+				9AF559CB27BB0CA90094A2E5 /* SwiftUITrackableScrollView */,
+				9AF559CE27BC4C870094A2E5 /* PositionScrollView */,
+			);
 			productName = kiwi;
 			productReference = 9A36E0F427A86ED600CF9989 /* kiwi.app */;
 			productType = "com.apple.product-type.application";
@@ -220,6 +231,11 @@
 				Base,
 			);
 			mainGroup = 9A36E0EB27A86ED600CF9989;
+			packageReferences = (
+				9AF559C527BAB88C0094A2E5 /* XCRemoteSwiftPackageReference "OSCKit" */,
+				9AF559CA27BB0CA90094A2E5 /* XCRemoteSwiftPackageReference "trackable-scroll-view" */,
+				9AF559CD27BC4C870094A2E5 /* XCRemoteSwiftPackageReference "PositionScrollView" */,
+			);
 			productRefGroup = 9A36E0F527A86ED600CF9989 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -580,6 +596,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		9AF559C527BAB88C0094A2E5 /* XCRemoteSwiftPackageReference "OSCKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SammySmallman/OSCKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.0;
+			};
+		};
+		9AF559CA27BB0CA90094A2E5 /* XCRemoteSwiftPackageReference "trackable-scroll-view" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/maxnatchanon/trackable-scroll-view.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		9AF559CD27BC4C870094A2E5 /* XCRemoteSwiftPackageReference "PositionScrollView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kazuooooo/PositionScrollView";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		9AF559C627BAB88C0094A2E5 /* OSCKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9AF559C527BAB88C0094A2E5 /* XCRemoteSwiftPackageReference "OSCKit" */;
+			productName = OSCKit;
+		};
+		9AF559CB27BB0CA90094A2E5 /* SwiftUITrackableScrollView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9AF559CA27BB0CA90094A2E5 /* XCRemoteSwiftPackageReference "trackable-scroll-view" */;
+			productName = SwiftUITrackableScrollView;
+		};
+		9AF559CE27BC4C870094A2E5 /* PositionScrollView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9AF559CD27BC4C870094A2E5 /* XCRemoteSwiftPackageReference "PositionScrollView" */;
+			productName = PositionScrollView;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 9A36E0EC27A86ED600CF9989 /* Project object */;
 }
