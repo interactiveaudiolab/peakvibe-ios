@@ -9,14 +9,14 @@ import Foundation
 import SwiftUI
 import CoreHaptics
 
-class Haptics {
+class Haptics : ObservableObject{
     var engine: CHHapticEngine!
     
     // Tokens to track whether app is in the foreground or the background:
     private var foregroundToken: NSObjectProtocol?
     private var backgroundToken: NSObjectProtocol?
     
-    private var engineNeedsStart = true
+    @Published var engineNeedsStart = true
     private lazy var supportsHaptics: Bool = {
         return CHHapticEngine.capabilitiesForHardware().supportsHaptics
     }()
@@ -24,18 +24,23 @@ class Haptics {
     func prepare() {
         guard supportsHaptics else { return }
         guard (engineNeedsStart) else { return }
+        
+        print("preparing haptic engine")
     
         do {
             engine = try CHHapticEngine()
             try engine?.start()
+            print("engine started")
             engineNeedsStart = false
+            addObservers()
         } catch {
-            print("There was an error creating the engine: \(error.localizedDescription)")
+            fatalError("There was an error creating the engine: \(error.localizedDescription)")
         }
         
         // handle engine reset
         engine?.resetHandler = {
             do {
+                print("handling haptic engine reset.")
                 // Try restarting the engine.
                 try self.engine?.start()
                 self.engineNeedsStart = false
@@ -63,32 +68,12 @@ class Haptics {
             @unknown default:
                 print("Unknown error")
             }
-            self.engineNeedsStart = true
+            DispatchQueue.main.async {
+                self.engineNeedsStart = true
+            }
         }
     }
     
-    func complexSuccess() {
-        if (engineNeedsStart) { prepare() }
-        
-        // make sure that the device supports haptics
-        guard CHHapticEngine.capabilitiesForHardware().supportsHaptics else { return }
-        var events = [CHHapticEvent]()
-
-        // create one intense, sharp tap
-        let intensity = CHHapticEventParameter(parameterID: .hapticIntensity, value: 1)
-        let sharpness = CHHapticEventParameter(parameterID: .hapticSharpness, value: 1)
-        let event = CHHapticEvent(eventType: .hapticTransient, parameters: [intensity, sharpness], relativeTime: 0)
-        events.append(event)
-
-        // convert those events into a pattern and play it immediately
-        do {
-            let pattern = try CHHapticPattern(events: events, parameters: [])
-            let player = try engine?.makePlayer(with: pattern)
-            try player?.start(atTime: 0)
-        } catch {
-            print("Failed to play pattern: \(error.localizedDescription).")
-        }
-    }
 
     private func addObservers() {
         backgroundToken = NotificationCenter.default.addObserver(forName: UIApplication.didEnterBackgroundNotification,
@@ -104,7 +89,9 @@ class Haptics {
                     print("Haptic Engine Shutdown Error: \(error)")
                     return
                 }
-                self.engineNeedsStart = true
+                DispatchQueue.main.async {
+                    self.engineNeedsStart = true
+                }
             })
         }
         foregroundToken = NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification,
@@ -117,33 +104,43 @@ class Haptics {
             // Restart the haptic engine.
             self.engine.start(completionHandler: { error in
                 if let error = error {
-                    print("Haptic Engine Startup Error: \(error)")
-                    return
+                    fatalError("Haptic Engine Startup Error: \(error)")
                 }
-                self.engineNeedsStart = false
+                DispatchQueue.main.async {
+                    self.engineNeedsStart = true
+                }
             })
         }
     }
 }
 
-class ContinuousHapticPlayer {
-    var player: CHHapticAdvancedPatternPlayer!
+class ContinuousHapticPlayer : ObservableObject {
+    @Published var player: CHHapticAdvancedPatternPlayer! = nil
     private var haptics: Haptics!
     
-    func start(with haptics: Haptics, intensity: Float, sharpness: Float) {
+    private var intensity: Float = 0.0
+    private var sharpness: Float = 1.0
+    
+    func start(with haptics: Haptics) {
         self.haptics = haptics
         
         let intensityParam = CHHapticEventParameter(parameterID: .hapticIntensity,
-                                                    value: intensity)
+                                                    value: self.intensity)
         let sharpnessParam = CHHapticEventParameter(parameterID: .hapticSharpness,
-                                                    value: sharpness)
+                                                    value: self.sharpness)
         let event = CHHapticEvent(eventType: .hapticContinuous,
                                   parameters: [intensityParam, sharpnessParam],
-                                  relativeTime: 0, duration: 640)
+                                  relativeTime: 0, duration: 86400)
         
         do {
             let pattern = try CHHapticPattern(events: [event], parameters: [])
             self.player = try self.haptics.engine.makeAdvancedPlayer(with: pattern)
+            self.player.completionHandler = { error in
+                print("haptic player stopped.")
+                if let error = error {
+                    print("error: \(error)")
+                }
+            }
             try self.player.start(atTime: 0)
         } catch let error {
             print("Pattern Player Creation Error: \(error)")
@@ -152,22 +149,27 @@ class ContinuousHapticPlayer {
     }
     
     func update(intensity: Float, sharpness: Float){
-        let intensityParam = CHHapticDynamicParameter(parameterID: .hapticIntensityControl,
-                                                    value: intensity, relativeTime: 0)
-        let sharpnessParam = CHHapticDynamicParameter(parameterID: .hapticSharpnessControl,
-                                                      value: sharpness, relativeTime: 0)
-        
-        // Send dynamic parameters to the haptic player.
-        do {
-            try player?.sendParameters([intensityParam, sharpnessParam], atTime: 0)
-        } catch let error {
-            print("Error updating player parameters: \(error)")
+        self.intensity = intensity
+        self.sharpness = sharpness
+        if (self.player != nil){
+            let intensityParam = CHHapticDynamicParameter(parameterID: .hapticIntensityControl,
+                                                          value: self.intensity, relativeTime: 0)
+            let sharpnessParam = CHHapticDynamicParameter(parameterID: .hapticSharpnessControl,
+                                                          value: self.sharpness, relativeTime: 0)
+            
+            // Send dynamic parameters to the haptic player.
+            do {
+                try self.player?.sendParameters([intensityParam, sharpnessParam], atTime: 0)
+            } catch let error {
+                print("Error updating player parameters: \(error)")
+            }
         }
     }
     
     func stop(atTime: TimeInterval) {
         do {
-            try player?.stop(atTime: atTime)
+            try self.player?.stop(atTime: atTime)
+            self.player = nil
         } catch let error {
             print("Error stopping the continuous haptic player: \(error)")
         }

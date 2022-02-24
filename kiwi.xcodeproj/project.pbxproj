@@ -14,9 +14,14 @@
 		9A36E10A27A86ED800CF9989 /* kiwiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36E10927A86ED800CF9989 /* kiwiTests.swift */; };
 		9A36E11527A86ED800CF9989 /* kiwiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36E11427A86ED800CF9989 /* kiwiUITests.swift */; };
 		9A36E12327A8837900CF9989 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36E12227A8837900CF9989 /* Haptics.swift */; };
-		9AF559C727BAB88C0094A2E5 /* OSCKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9AF559C627BAB88C0094A2E5 /* OSCKit */; };
-		9AF559CC27BB0CA90094A2E5 /* SwiftUITrackableScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = 9AF559CB27BB0CA90094A2E5 /* SwiftUITrackableScrollView */; };
-		9AF559CF27BC4C870094A2E5 /* PositionScrollView in Frameworks */ = {isa = PBXBuildFile; productRef = 9AF559CE27BC4C870094A2E5 /* PositionScrollView */; };
+		9AA0089F27C68AB100359374 /* OSCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0089E27C68AB100359374 /* OSCView.swift */; };
+		9AA008A227C6B8DA00359374 /* GetIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA008A127C6B8DA00359374 /* GetIP.swift */; };
+		9AA008A527C6C91D00359374 /* SwiftUIOSC in Frameworks */ = {isa = PBXBuildFile; productRef = 9AA008A427C6C91D00359374 /* SwiftUIOSC */; };
+		9ADE8DC627BEE5F500D52130 /* AudioHapticPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DC527BEE5F500D52130 /* AudioHapticPixel.swift */; };
+		9ADE8DC827BEE82300D52130 /* AudioHapticPixelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DC727BEE82300D52130 /* AudioHapticPixelView.swift */; };
+		9ADE8DCA27BEF22500D52130 /* AudioHapticPixelList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DC927BEF22500D52130 /* AudioHapticPixelList.swift */; };
+		9ADE8DCC27BEF33A00D52130 /* AudioHapticPixelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DCB27BEF33A00D52130 /* AudioHapticPixelData.swift */; };
+		9AEA70EA27C015870027C584 /* pixels.json in Resources */ = {isa = PBXBuildFile; fileRef = 9AEA70E927C015870027C584 /* pixels.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,6 +55,14 @@
 		9A36E11427A86ED800CF9989 /* kiwiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kiwiUITests.swift; sourceTree = "<group>"; };
 		9A36E11627A86ED800CF9989 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A36E12227A8837900CF9989 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		9AA0089E27C68AB100359374 /* OSCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCView.swift; sourceTree = "<group>"; };
+		9AA008A127C6B8DA00359374 /* GetIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetIP.swift; sourceTree = "<group>"; };
+		9AA008A727C6C97300359374 /* SwiftUIOSC */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftUIOSC; path = ../../../SwiftUIOSC; sourceTree = "<group>"; };
+		9ADE8DC527BEE5F500D52130 /* AudioHapticPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixel.swift; sourceTree = "<group>"; };
+		9ADE8DC727BEE82300D52130 /* AudioHapticPixelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixelView.swift; sourceTree = "<group>"; };
+		9ADE8DC927BEF22500D52130 /* AudioHapticPixelList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixelList.swift; sourceTree = "<group>"; };
+		9ADE8DCB27BEF33A00D52130 /* AudioHapticPixelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixelData.swift; sourceTree = "<group>"; };
+		9AEA70E927C015870027C584 /* pixels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pixels.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,9 +70,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9AF559CF27BC4C870094A2E5 /* PositionScrollView in Frameworks */,
-				9AF559CC27BB0CA90094A2E5 /* SwiftUITrackableScrollView in Frameworks */,
-				9AF559C727BAB88C0094A2E5 /* OSCKit in Frameworks */,
+				9AA008A527C6C91D00359374 /* SwiftUIOSC in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +94,7 @@
 		9A36E0EB27A86ED600CF9989 = {
 			isa = PBXGroup;
 			children = (
+				9AA008A627C6C97300359374 /* Packages */,
 				9A36E0F627A86ED600CF9989 /* kiwi */,
 				9A36E10827A86ED800CF9989 /* kiwiTests */,
 				9A36E11327A86ED800CF9989 /* kiwiUITests */,
@@ -103,9 +115,11 @@
 		9A36E0F627A86ED600CF9989 /* kiwi */ = {
 			isa = PBXGroup;
 			children = (
-				9A36E12227A8837900CF9989 /* Haptics.swift */,
+				9AA008A027C6B8B800359374 /* Utils */,
+				9A5F598627BF6D9D008D3706 /* Resources */,
+				9ADE8DD027BEF51500D52130 /* Models */,
+				9ADE8DCE27BEF46800D52130 /* Views */,
 				9A36E0F727A86ED700CF9989 /* kiwiApp.swift */,
-				9A36E0F927A86ED700CF9989 /* ContentView.swift */,
 				9A36E0FB27A86ED800CF9989 /* Assets.xcassets */,
 				9A36E10027A86ED800CF9989 /* Info.plist */,
 				9A36E0FD27A86ED800CF9989 /* Preview Content */,
@@ -139,6 +153,51 @@
 			path = kiwiUITests;
 			sourceTree = "<group>";
 		};
+		9A5F598627BF6D9D008D3706 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				9AEA70E927C015870027C584 /* pixels.json */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		9AA008A027C6B8B800359374 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				9AA008A127C6B8DA00359374 /* GetIP.swift */,
+			);
+			path = Utils;
+			sourceTree = "<group>";
+		};
+		9AA008A627C6C97300359374 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				9AA008A727C6C97300359374 /* SwiftUIOSC */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		9ADE8DCE27BEF46800D52130 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				9A36E0F927A86ED700CF9989 /* ContentView.swift */,
+				9ADE8DC727BEE82300D52130 /* AudioHapticPixelView.swift */,
+				9ADE8DC927BEF22500D52130 /* AudioHapticPixelList.swift */,
+				9AA0089E27C68AB100359374 /* OSCView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		9ADE8DD027BEF51500D52130 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				9ADE8DCB27BEF33A00D52130 /* AudioHapticPixelData.swift */,
+				9A36E12227A8837900CF9989 /* Haptics.swift */,
+				9ADE8DC527BEE5F500D52130 /* AudioHapticPixel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -156,9 +215,7 @@
 			);
 			name = kiwi;
 			packageProductDependencies = (
-				9AF559C627BAB88C0094A2E5 /* OSCKit */,
-				9AF559CB27BB0CA90094A2E5 /* SwiftUITrackableScrollView */,
-				9AF559CE27BC4C870094A2E5 /* PositionScrollView */,
+				9AA008A427C6C91D00359374 /* SwiftUIOSC */,
 			);
 			productName = kiwi;
 			productReference = 9A36E0F427A86ED600CF9989 /* kiwi.app */;
@@ -232,9 +289,7 @@
 			);
 			mainGroup = 9A36E0EB27A86ED600CF9989;
 			packageReferences = (
-				9AF559C527BAB88C0094A2E5 /* XCRemoteSwiftPackageReference "OSCKit" */,
-				9AF559CA27BB0CA90094A2E5 /* XCRemoteSwiftPackageReference "trackable-scroll-view" */,
-				9AF559CD27BC4C870094A2E5 /* XCRemoteSwiftPackageReference "PositionScrollView" */,
+				9AA008A327C6C91D00359374 /* XCRemoteSwiftPackageReference "SwiftUIOSC" */,
 			);
 			productRefGroup = 9A36E0F527A86ED600CF9989 /* Products */;
 			projectDirPath = "";
@@ -254,6 +309,7 @@
 			files = (
 				9A36E0FF27A86ED800CF9989 /* Preview Assets.xcassets in Resources */,
 				9A36E0FC27A86ED800CF9989 /* Assets.xcassets in Resources */,
+				9AEA70EA27C015870027C584 /* pixels.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -278,9 +334,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AA0089F27C68AB100359374 /* OSCView.swift in Sources */,
 				9A36E12327A8837900CF9989 /* Haptics.swift in Sources */,
+				9AA008A227C6B8DA00359374 /* GetIP.swift in Sources */,
+				9ADE8DCC27BEF33A00D52130 /* AudioHapticPixelData.swift in Sources */,
 				9A36E0FA27A86ED700CF9989 /* ContentView.swift in Sources */,
 				9A36E0F827A86ED700CF9989 /* kiwiApp.swift in Sources */,
+				9ADE8DC627BEE5F500D52130 /* AudioHapticPixel.swift in Sources */,
+				9ADE8DC827BEE82300D52130 /* AudioHapticPixelView.swift in Sources */,
+				9ADE8DCA27BEF22500D52130 /* AudioHapticPixelList.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -598,47 +660,21 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		9AF559C527BAB88C0094A2E5 /* XCRemoteSwiftPackageReference "OSCKit" */ = {
+		9AA008A327C6C91D00359374 /* XCRemoteSwiftPackageReference "SwiftUIOSC" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SammySmallman/OSCKit";
+			repositoryURL = "https://github.com/heestand-xyz/SwiftUIOSC";
 			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.1.0;
-			};
-		};
-		9AF559CA27BB0CA90094A2E5 /* XCRemoteSwiftPackageReference "trackable-scroll-view" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/maxnatchanon/trackable-scroll-view.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-		9AF559CD27BC4C870094A2E5 /* XCRemoteSwiftPackageReference "PositionScrollView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kazuooooo/PositionScrollView";
-			requirement = {
-				branch = master;
+				branch = main;
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		9AF559C627BAB88C0094A2E5 /* OSCKit */ = {
+		9AA008A427C6C91D00359374 /* SwiftUIOSC */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 9AF559C527BAB88C0094A2E5 /* XCRemoteSwiftPackageReference "OSCKit" */;
-			productName = OSCKit;
-		};
-		9AF559CB27BB0CA90094A2E5 /* SwiftUITrackableScrollView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9AF559CA27BB0CA90094A2E5 /* XCRemoteSwiftPackageReference "trackable-scroll-view" */;
-			productName = SwiftUITrackableScrollView;
-		};
-		9AF559CE27BC4C870094A2E5 /* PositionScrollView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 9AF559CD27BC4C870094A2E5 /* XCRemoteSwiftPackageReference "PositionScrollView" */;
-			productName = PositionScrollView;
+			package = 9AA008A327C6C91D00359374 /* XCRemoteSwiftPackageReference "SwiftUIOSC" */;
+			productName = SwiftUIOSC;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
