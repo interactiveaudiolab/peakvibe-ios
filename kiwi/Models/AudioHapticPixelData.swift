@@ -8,12 +8,28 @@
 import Foundation
 import Combine
 import SwiftUI
+import SwiftUIOSC
 
 final class PixelData: ObservableObject {
-    @Published var pixels: [AudioHapticPixel] = load("pixels.json")
+    @Published var pixels: [AudioHapticPixel] = loadFromFile("pixels.json")
+    @ObservedObject var osc: OSC = .shared
+    
+    
+    func prepare() {
+        let stat: Bool = true
+        osc.send(Bool.convert(values: stat.values), at: "/init") // ??
+        
+        osc.receive(on: "/set_pixels", { values in
+            let pixelsStr: String = .convert(values: values)
+            let newPixels: [AudioHapticPixel] = loadFromString(pixelsStr)
+            DispatchQueue.main.async {
+                self.pixels = newPixels
+            }
+        })
+    }
 }
 
-func load<T: Decodable>(_ filename: String) -> T {
+func loadFromFile<T: Decodable>(_ filename: String) -> T {
     let data: Data
 
     guard let file = Bundle.main.url(forResource: filename, withExtension: nil)
@@ -36,3 +52,12 @@ func load<T: Decodable>(_ filename: String) -> T {
 }
 
 
+func loadFromString<T: Decodable>(_ json: String) -> T {
+    let data = Data(json.utf8)
+    do {
+        let decoder = JSONDecoder()
+        return try decoder.decode(T.self, from: data)
+    } catch {
+        fatalError("Couldn't parse json string as \(T.self):\n\(error)")
+    }
+}

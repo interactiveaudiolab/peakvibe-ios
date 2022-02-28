@@ -38,7 +38,6 @@ struct OSCStatusBar : View {
 
 struct ContentView: View {
     @EnvironmentObject var haptics: Haptics
-    @EnvironmentObject var player: ContinuousHapticPlayer
 
     var body: some View {
         NavigationView{
@@ -59,7 +58,6 @@ struct ContentView_Previews: PreviewProvider {
                 .previewInterfaceOrientation(.landscapeRight)
                 .environmentObject(PixelData())
                 .environmentObject(Haptics())
-                .environmentObject(ContinuousHapticPlayer())
         } else {
             // Fallback on earlier versions
         }

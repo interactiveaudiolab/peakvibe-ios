@@ -11,7 +11,6 @@ import SwiftUI
 struct kiwiApp: App {
     @StateObject var pixelData = PixelData()
     @StateObject var haptics = Haptics()
-    @StateObject var player = ContinuousHapticPlayer()
     
     var body: some Scene {
         
@@ -19,8 +18,11 @@ struct kiwiApp: App {
             ContentView()
                 .environmentObject(pixelData)
                 .environmentObject(haptics)
-                .environmentObject(player)
-                .onAppear(perform: haptics.prepare)
+                .onAppear(perform: {
+                    haptics.prepare()
+                    pixelData.prepare()
+                })
+                
         }
     }
 }

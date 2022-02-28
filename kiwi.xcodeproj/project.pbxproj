@@ -17,6 +17,7 @@
 		9AA0089F27C68AB100359374 /* OSCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0089E27C68AB100359374 /* OSCView.swift */; };
 		9AA008A227C6B8DA00359374 /* GetIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA008A127C6B8DA00359374 /* GetIP.swift */; };
 		9AA008A527C6C91D00359374 /* SwiftUIOSC in Frameworks */ = {isa = PBXBuildFile; productRef = 9AA008A427C6C91D00359374 /* SwiftUIOSC */; };
+		9AA008A927C8130900359374 /* Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA008A827C8130900359374 /* Clamp.swift */; };
 		9ADE8DC627BEE5F500D52130 /* AudioHapticPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DC527BEE5F500D52130 /* AudioHapticPixel.swift */; };
 		9ADE8DC827BEE82300D52130 /* AudioHapticPixelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DC727BEE82300D52130 /* AudioHapticPixelView.swift */; };
 		9ADE8DCA27BEF22500D52130 /* AudioHapticPixelList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DC927BEF22500D52130 /* AudioHapticPixelList.swift */; };
@@ -58,6 +59,7 @@
 		9AA0089E27C68AB100359374 /* OSCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCView.swift; sourceTree = "<group>"; };
 		9AA008A127C6B8DA00359374 /* GetIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetIP.swift; sourceTree = "<group>"; };
 		9AA008A727C6C97300359374 /* SwiftUIOSC */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftUIOSC; path = ../../../SwiftUIOSC; sourceTree = "<group>"; };
+		9AA008A827C8130900359374 /* Clamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamp.swift; sourceTree = "<group>"; };
 		9ADE8DC527BEE5F500D52130 /* AudioHapticPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixel.swift; sourceTree = "<group>"; };
 		9ADE8DC727BEE82300D52130 /* AudioHapticPixelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixelView.swift; sourceTree = "<group>"; };
 		9ADE8DC927BEF22500D52130 /* AudioHapticPixelList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixelList.swift; sourceTree = "<group>"; };
@@ -165,6 +167,7 @@
 			isa = PBXGroup;
 			children = (
 				9AA008A127C6B8DA00359374 /* GetIP.swift */,
+				9AA008A827C8130900359374 /* Clamp.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -335,6 +338,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9AA0089F27C68AB100359374 /* OSCView.swift in Sources */,
+				9AA008A927C8130900359374 /* Clamp.swift in Sources */,
 				9A36E12327A8837900CF9989 /* Haptics.swift in Sources */,
 				9AA008A227C6B8DA00359374 /* GetIP.swift in Sources */,
 				9ADE8DCC27BEF33A00D52130 /* AudioHapticPixelData.swift in Sources */,

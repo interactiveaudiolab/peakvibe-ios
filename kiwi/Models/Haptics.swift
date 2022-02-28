@@ -114,14 +114,53 @@ class Haptics : ObservableObject{
     }
 }
 
-class ContinuousHapticPlayer : ObservableObject {
-    @Published var player: CHHapticAdvancedPatternPlayer! = nil
-    private var haptics: Haptics!
+// abstract class for haptic players
+class AudioPixelHapticPlayer: ObservableObject {
+    var player: CHHapticAdvancedPatternPlayer! = nil
+    internal var haptics: Haptics!
     
-    private var intensity: Float = 0.0
-    private var sharpness: Float = 1.0
+    internal var intensity: Float = 1.0
+    internal var sharpness: Float = 1.0
+
+    // takes a list of haptic events, plays them immediately, and handles any errors
+    func startEvents(_ events: [CHHapticEvent]) -> Void {
+        do {
+            let pattern = try CHHapticPattern(events: events, parameters: [])
+            self.player = try self.haptics.engine.makeAdvancedPlayer(with: pattern)
+            self.player.completionHandler = { error in
+                print("haptic player completed.")
+                if let error = error {
+                    print("error: \(error)")
+                }
+            }
+            try self.player.start(atTime: CHHapticTimeImmediate)
+        } catch let error {
+            print("Pattern Player Creation Error: \(error)")
+        }
+    }
     
-    func start(with haptics: Haptics) {
+    // start the haptic player
+    func start(with haptics: Haptics) { preconditionFailure("not implemented") }
+    
+    // update pixel value
+    func update(value: Float) { preconditionFailure("not implemented") }
+    
+    // stop immediately
+    func stop() {
+        do {
+            try self.player?.stop(atTime: 0)
+            self.player = nil
+        } catch let error {
+            print("Error stopping the haptic player: \(error)")
+        }
+    }
+}
+
+
+// a haptic player that works via changes in intensity and sharpness
+class ContinuousHapticPlayer : AudioPixelHapticPlayer {
+    
+    override func start(with haptics: Haptics) {
         self.haptics = haptics
         
         let intensityParam = CHHapticEventParameter(parameterID: .hapticIntensity,
@@ -130,26 +169,13 @@ class ContinuousHapticPlayer : ObservableObject {
                                                     value: self.sharpness)
         let event = CHHapticEvent(eventType: .hapticContinuous,
                                   parameters: [intensityParam, sharpnessParam],
-                                  relativeTime: 0, duration: 86400)
-        
-        do {
-            let pattern = try CHHapticPattern(events: [event], parameters: [])
-            self.player = try self.haptics.engine.makeAdvancedPlayer(with: pattern)
-            self.player.completionHandler = { error in
-                print("haptic player stopped.")
-                if let error = error {
-                    print("error: \(error)")
-                }
-            }
-            try self.player.start(atTime: 0)
-        } catch let error {
-            print("Pattern Player Creation Error: \(error)")
-        }
-        
+                                  relativeTime: 0, duration: 864000000)
+         
+        startEvents([event])
     }
     
-    func update(intensity: Float, sharpness: Float){
-        self.intensity = intensity
+    override func update(value: Float){
+        self.intensity = value // the continuous haptic player just maps the value to intensity directly
         self.sharpness = sharpness
         if (self.player != nil){
             let intensityParam = CHHapticDynamicParameter(parameterID: .hapticIntensityControl,
@@ -165,13 +191,88 @@ class ContinuousHapticPlayer : ObservableObject {
             }
         }
     }
-    
-    func stop(atTime: TimeInterval) {
-        do {
-            try self.player?.stop(atTime: atTime)
-            self.player = nil
-        } catch let error {
-            print("Error stopping the continuous haptic player: \(error)")
-        }
-    }
 }
+
+
+// a haptic player that sends a train of pulses at different frequencies,
+// attempting to mimic frequency modulation
+class PulseFMHapticPlayer : AudioPixelHapticPlayer {
+    private var pulseTimer: DispatchSourceTimer? = nil
+    private var frequency: Float = 1
+    private var period: Int { get { Int(1 / self.frequency * 1000000) } }
+    
+    override func start(with haptics: Haptics) {
+        self.haptics = haptics
+        setupPulseTimer()
+    }
+    
+    override func update(value: Float) {
+        // TODO: smarter mapping
+        // is this a race vs timer.setEventHandler?
+//        self.frequency = (500 * value).clamped(to: 100...500)
+//        self.frequency = 1
+        self.frequency += 1
+    }
+    
+    func setupPulseTimer() {
+        guard pulseTimer == nil else { return }
+        // play immediately
+        self.playHapticTransient(intensity: self.intensity,
+                                 sharpness: self.sharpness)
+        
+        // Create a timer to play subsequent transient patterns in succession.
+        pulseTimer?.cancel()
+        pulseTimer = DispatchSource.makeTimerSource(queue: .main)
+        guard let timer = pulseTimer else {
+            print("failed to create timer")
+            return
+        }
+        timer.schedule(deadline: .now() + .microseconds(self.period))
+        timer.setEventHandler() { [unowned self] in
+            self.playHapticTransient(intensity: self.intensity,
+                                     sharpness: self.sharpness)
+            
+            
+            // schedule the next timer
+            timer.schedule(deadline: .now() + .microseconds(self.period))
+        }
+
+        // Activate the timer.
+        timer.resume()
+
+    }
+
+
+    // Play a haptic transient pattern at the given time, intensity, and sharpness.
+    private func playHapticTransient(intensity: Float,
+                                     sharpness: Float) {
+        
+        // Create an event (static) parameter to represent the haptic's intensity.
+        let intensityParameter = CHHapticEventParameter(parameterID: .hapticIntensity,
+                                                        value: intensity)
+        
+        // Create an event (static) parameter to represent the haptic's sharpness.
+        let sharpnessParameter = CHHapticEventParameter(parameterID: .hapticSharpness,
+                                                        value: sharpness)
+        
+        // Create an event to represent the transient haptic pattern.
+        let event = CHHapticEvent(eventType: .hapticTransient,
+                                  parameters: [intensityParameter, sharpnessParameter],
+                                  relativeTime: 0)
+        
+        startEvents([event])
+        
+    }
+    
+    override func stop() {
+        super.stop()
+        // Stop the transient timer.
+        pulseTimer?.cancel()
+        pulseTimer = nil
+    }
+
+}
+
+
+
+

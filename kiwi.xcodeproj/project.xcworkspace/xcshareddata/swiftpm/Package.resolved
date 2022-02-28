@@ -36,15 +36,6 @@
           "revision": "776909ce0b37bd9ea1fa0f2156e4e5ad07a592b8",
           "version": "4.2.0"
         }
-      },
-      {
-        "package": "SwiftUIOSC",
-        "repositoryURL": "https://github.com/heestand-xyz/SwiftUIOSC",
-        "state": {
-          "branch": "main",
-          "revision": "cb3f544838caa3b0f3e512ff8915e89adbd2ee88",
-          "version": null
-        }
       }
     ]
   },
