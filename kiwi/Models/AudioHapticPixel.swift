@@ -10,6 +10,5 @@ import SwiftUI
 
 struct AudioHapticPixel: Hashable, Codable, Identifiable {
     var id: Int
-    var intensity: Float
-    var sharpness: Float
+    var value: Double
 }

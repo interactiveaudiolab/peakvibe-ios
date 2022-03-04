@@ -21,7 +21,7 @@ struct AudioHapticPixelView : View {
                                          startPoint: .top,
                                          endPoint: .bottom))
                     .frame(width: geo.size.width,
-                           height: CGFloat(pixel.intensity) * geo.size.height)
+                           height: CGFloat(pixel.value) * geo.size.height)
                 Spacer()
             }
         }

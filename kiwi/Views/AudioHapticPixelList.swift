@@ -25,7 +25,7 @@ struct AudioHapticPixelListView : View {
     
     // haptics
     @EnvironmentObject var haptics: Haptics
-    @StateObject var player = PulseFMHapticPlayer()
+    @StateObject var player = ContinuousHapticPlayer()
     
     
     // osc stuff
@@ -64,10 +64,10 @@ struct AudioHapticPixelListView : View {
     }
     
     func updateHapticPlayer(activate pixel: AudioHapticPixel) {
-        print("updating player to value: \(pixel.intensity)")
+        print("updating player to value: \(pixel.value)")
         
         // update player params
-        self.player.update(value: pixel.intensity)
+        self.player.update(value: Float(pixel.value))
         
         // if the player is off, start it
         if (self.player.player == nil) {
@@ -106,13 +106,13 @@ struct AudioHapticPixelListView : View {
                 }
                 .coordinateSpace(name: pixelCoordinateSpace)
                 .simultaneousGesture(zoom)
+                .onAppear(perform: pixelData.prepare)
                 
                 // add a cursor for visual guidance
                 Circle()
                     .fill(.red)
                     .frame(width: 25)
             }
-            
         }
     }
 }

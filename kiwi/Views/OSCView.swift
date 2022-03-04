@@ -163,9 +163,9 @@ struct OSCSettingsView: View {
         .frame(minWidth: 300, maxWidth: 400)
         .padding()
         .onAppear {
-            osc.clientAddress = "localhost"
-            osc.clientPort = 8000
-            osc.serverPort = 7000
+            osc.clientAddress = "172.16.4.58"
+            osc.clientPort = 8001
+            osc.serverPort = 8000
         }
     }
 }

@@ -11,7 +11,7 @@ import SwiftUI
 import SwiftUIOSC
 
 final class PixelData: ObservableObject {
-    @Published var pixels: [AudioHapticPixel] = loadFromFile("pixels.json")
+    @Published var pixels: [AudioHapticPixel] = []
     @ObservedObject var osc: OSC = .shared
     
     
@@ -19,11 +19,17 @@ final class PixelData: ObservableObject {
         let stat: Bool = true
         osc.send(Bool.convert(values: stat.values), at: "/init") // ??
         
-        osc.receive(on: "/set_pixels", { values in
+        osc.receive(on: "/pixel", { values in
             let pixelsStr: String = .convert(values: values)
-            let newPixels: [AudioHapticPixel] = loadFromString(pixelsStr)
+            let newPixel: AudioHapticPixel = loadFromString(pixelsStr)
             DispatchQueue.main.async {
-                self.pixels = newPixels
+                var currIdx = self.pixels.count
+                while (self.pixels.count <= newPixel.id) {
+                    self.pixels.append(AudioHapticPixel.init(id: currIdx, value: 0.0))
+                    currIdx += 1
+                }
+                
+                self.pixels[newPixel.id] = newPixel
             }
         })
     }

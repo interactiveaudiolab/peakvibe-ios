@@ -20,7 +20,6 @@ struct kiwiApp: App {
                 .environmentObject(haptics)
                 .onAppear(perform: {
                     haptics.prepare()
-                    pixelData.prepare()
                 })
                 
         }
