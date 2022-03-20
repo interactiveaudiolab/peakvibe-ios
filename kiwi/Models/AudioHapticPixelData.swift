@@ -11,7 +11,7 @@ import SwiftUI
 import SwiftUIOSC
 
 final class PixelData: ObservableObject {
-    @Published var pixels: [AudioHapticPixel] = []
+    @Published var pixels: [AudioHapticPixel] = loadFromFile("pixels.json")
     @ObservedObject var osc: OSC = .shared
     
     
@@ -21,7 +21,7 @@ final class PixelData: ObservableObject {
         
         osc.receive(on: "/pixel", { values in
             let pixelsStr: String = .convert(values: values)
-            let newPixel: AudioHapticPixel = loadFromString(pixelsStr)
+            let newPixel: AudioHapticPixel = loadFromString(pixelsStr) ?? AudioHapticPixel.init(id: 0, value: 0)
             DispatchQueue.main.async {
                 var currIdx = self.pixels.count
                 while (self.pixels.count <= newPixel.id) {
@@ -58,12 +58,13 @@ func loadFromFile<T: Decodable>(_ filename: String) -> T {
 }
 
 
-func loadFromString<T: Decodable>(_ json: String) -> T {
+func loadFromString<T: Decodable>(_ json: String) -> T? {
     let data = Data(json.utf8)
     do {
         let decoder = JSONDecoder()
         return try decoder.decode(T.self, from: data)
     } catch {
-        fatalError("Couldn't parse json string as \(T.self):\n\(error)")
+        print("Couldn't parse json string as \(T.self):\n\(error)")
+        return nil
     }
 }

@@ -18,11 +18,11 @@
 		9AA008A227C6B8DA00359374 /* GetIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA008A127C6B8DA00359374 /* GetIP.swift */; };
 		9AA008A527C6C91D00359374 /* SwiftUIOSC in Frameworks */ = {isa = PBXBuildFile; productRef = 9AA008A427C6C91D00359374 /* SwiftUIOSC */; };
 		9AA008A927C8130900359374 /* Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA008A827C8130900359374 /* Clamp.swift */; };
+		9AB58A8D27E7AC2F00E64C35 /* pixels.json in Resources */ = {isa = PBXBuildFile; fileRef = 9AB58A8C27E7AC2F00E64C35 /* pixels.json */; };
 		9ADE8DC627BEE5F500D52130 /* AudioHapticPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DC527BEE5F500D52130 /* AudioHapticPixel.swift */; };
 		9ADE8DC827BEE82300D52130 /* AudioHapticPixelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DC727BEE82300D52130 /* AudioHapticPixelView.swift */; };
 		9ADE8DCA27BEF22500D52130 /* AudioHapticPixelList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DC927BEF22500D52130 /* AudioHapticPixelList.swift */; };
 		9ADE8DCC27BEF33A00D52130 /* AudioHapticPixelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DCB27BEF33A00D52130 /* AudioHapticPixelData.swift */; };
-		9AEA70EA27C015870027C584 /* pixels.json in Resources */ = {isa = PBXBuildFile; fileRef = 9AEA70E927C015870027C584 /* pixels.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,11 +60,11 @@
 		9AA008A127C6B8DA00359374 /* GetIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetIP.swift; sourceTree = "<group>"; };
 		9AA008A727C6C97300359374 /* SwiftUIOSC */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftUIOSC; path = ../../../SwiftUIOSC; sourceTree = "<group>"; };
 		9AA008A827C8130900359374 /* Clamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamp.swift; sourceTree = "<group>"; };
+		9AB58A8C27E7AC2F00E64C35 /* pixels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pixels.json; sourceTree = "<group>"; };
 		9ADE8DC527BEE5F500D52130 /* AudioHapticPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixel.swift; sourceTree = "<group>"; };
 		9ADE8DC727BEE82300D52130 /* AudioHapticPixelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixelView.swift; sourceTree = "<group>"; };
 		9ADE8DC927BEF22500D52130 /* AudioHapticPixelList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixelList.swift; sourceTree = "<group>"; };
 		9ADE8DCB27BEF33A00D52130 /* AudioHapticPixelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixelData.swift; sourceTree = "<group>"; };
-		9AEA70E927C015870027C584 /* pixels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pixels.json; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -158,7 +158,7 @@
 		9A5F598627BF6D9D008D3706 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				9AEA70E927C015870027C584 /* pixels.json */,
+				9AB58A8C27E7AC2F00E64C35 /* pixels.json */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -312,7 +312,7 @@
 			files = (
 				9A36E0FF27A86ED800CF9989 /* Preview Assets.xcassets in Resources */,
 				9A36E0FC27A86ED800CF9989 /* Assets.xcassets in Resources */,
-				9AEA70EA27C015870027C584 /* pixels.json in Resources */,
+				9AB58A8D27E7AC2F00E64C35 /* pixels.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,7 +513,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = interactiveaudiolab.kiwi;
+				PRODUCT_BUNDLE_IDENTIFIER = interactiveaudiolab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -535,7 +535,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = interactiveaudiolab.kiwi;
+				PRODUCT_BUNDLE_IDENTIFIER = interactiveaudiolab;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

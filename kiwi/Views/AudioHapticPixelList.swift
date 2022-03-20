@@ -37,6 +37,7 @@ struct AudioHapticPixelListView : View {
         MagnificationGesture()
             .onEnded{ value in
                 DispatchQueue.main.async {
+//                    pixelData.pixels.removeAll()
                     zoomMsg = value
                     print("zoomed by \(value)")
                 }

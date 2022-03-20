@@ -163,7 +163,7 @@ struct OSCSettingsView: View {
         .frame(minWidth: 300, maxWidth: 400)
         .padding()
         .onAppear {
-            osc.clientAddress = "172.16.4.58"
+            osc.clientAddress = "192.168.0.11"
             osc.clientPort = 8001
             osc.serverPort = 8000
         }
