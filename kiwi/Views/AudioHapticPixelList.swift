@@ -95,8 +95,11 @@ struct AudioHapticPixelListView : View {
                                         if isPixelActive(globalGeo: geo, pixelGeo: pixelGeo) {
                                             print("pixel with index \(idx) is at scroll view center")
                                             updateHapticPlayer(activate: pixel)
-                                            //send the update the cursor on the controller
-                                            cursorMsg = idx
+                                            // send the update the cursor on the controller
+                                            // only if it hasn't been sent yet
+                                            if (cursorMsg != idx){
+                                                cursorMsg = idx
+                                            }
                                         }
                                     }
                             }
