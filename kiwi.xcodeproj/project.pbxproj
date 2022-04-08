@@ -18,6 +18,7 @@
 		9AA008A227C6B8DA00359374 /* GetIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA008A127C6B8DA00359374 /* GetIP.swift */; };
 		9AA008A527C6C91D00359374 /* SwiftUIOSC in Frameworks */ = {isa = PBXBuildFile; productRef = 9AA008A427C6C91D00359374 /* SwiftUIOSC */; };
 		9AA008A927C8130900359374 /* Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA008A827C8130900359374 /* Clamp.swift */; };
+		9AA027A827FC998100177405 /* Bonjour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA027A727FC998100177405 /* Bonjour.swift */; };
 		9AB58A8D27E7AC2F00E64C35 /* pixels.json in Resources */ = {isa = PBXBuildFile; fileRef = 9AB58A8C27E7AC2F00E64C35 /* pixels.json */; };
 		9ADE8DC627BEE5F500D52130 /* AudioHapticPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DC527BEE5F500D52130 /* AudioHapticPixel.swift */; };
 		9ADE8DC827BEE82300D52130 /* AudioHapticPixelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DC727BEE82300D52130 /* AudioHapticPixelView.swift */; };
@@ -60,6 +61,7 @@
 		9AA008A127C6B8DA00359374 /* GetIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetIP.swift; sourceTree = "<group>"; };
 		9AA008A727C6C97300359374 /* SwiftUIOSC */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftUIOSC; path = ../../../SwiftUIOSC; sourceTree = "<group>"; };
 		9AA008A827C8130900359374 /* Clamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamp.swift; sourceTree = "<group>"; };
+		9AA027A727FC998100177405 /* Bonjour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bonjour.swift; sourceTree = "<group>"; };
 		9AB58A8C27E7AC2F00E64C35 /* pixels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pixels.json; sourceTree = "<group>"; };
 		9ADE8DC527BEE5F500D52130 /* AudioHapticPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixel.swift; sourceTree = "<group>"; };
 		9ADE8DC727BEE82300D52130 /* AudioHapticPixelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixelView.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 			children = (
 				9AA008A127C6B8DA00359374 /* GetIP.swift */,
 				9AA008A827C8130900359374 /* Clamp.swift */,
+				9AA027A727FC998100177405 /* Bonjour.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -345,6 +348,7 @@
 				9A36E0FA27A86ED700CF9989 /* ContentView.swift in Sources */,
 				9A36E0F827A86ED700CF9989 /* kiwiApp.swift in Sources */,
 				9ADE8DC627BEE5F500D52130 /* AudioHapticPixel.swift in Sources */,
+				9AA027A827FC998100177405 /* Bonjour.swift in Sources */,
 				9ADE8DC827BEE82300D52130 /* AudioHapticPixelView.swift in Sources */,
 				9ADE8DCA27BEF22500D52130 /* AudioHapticPixelList.swift in Sources */,
 			);
@@ -419,6 +423,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -480,6 +485,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTING_SEARCH_PATHS = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

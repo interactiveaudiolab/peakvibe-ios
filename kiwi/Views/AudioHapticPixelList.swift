@@ -37,7 +37,7 @@ struct AudioHapticPixelListView : View {
         MagnificationGesture()
             .onEnded{ value in
                 DispatchQueue.main.async {
-//                    pixelData.pixels.removeAll()
+                    // TODO: need to clear the pixels somehow?
                     zoomMsg = value
                     print("zoomed by \(value)")
                 }
@@ -83,9 +83,9 @@ struct AudioHapticPixelListView : View {
             ZStack{
                 ScrollView(.horizontal) {
                     LazyHStack(spacing: pixelSpacing) {
-                        ForEach(0..<pixelData.pixels.count, id: \.self) { idx in
+                        List(pixelData.pixels) { pixel in
                             GeometryReader { pixelGeo in
-                                let pixel = pixelData.pixels[idx]
+                                let idx = pixel.id
                                 AudioHapticPixelView(pixel: pixel)
                                     // update scroll offset
                                     .preference(key: OffsetPreferenceKey.self,

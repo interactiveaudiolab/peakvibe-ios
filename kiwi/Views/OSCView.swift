@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftUIOSC
+import dnssd
 
 struct OSCStatus: View {
     @ObservedObject var osc: OSC = .shared
@@ -163,11 +164,18 @@ struct OSCSettingsView: View {
         .frame(minWidth: 300, maxWidth: 400)
         .padding()
         .onAppear {
-            osc.clientAddress = "10.105.45.60"
+            osc.clientAddress = "192.168.0.105"
             osc.clientPort = 8001
             osc.serverPort = 8000
+            
+            let browser: Bonjour = Bonjour()
+            // This will find all HTTP servers - Check out Bonjour.Services for common services
+            browser.findService(Bonjour.Services.AirPlay, domain: Bonjour.LocalDomain) { (services) in
+                // Do something with your services!
+                // services will be an empty array if nothing was found
+                print("services found: \(services)")
+            }
+            
         }
     }
 }
-
-
