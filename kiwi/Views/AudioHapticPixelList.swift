@@ -67,32 +67,45 @@ struct AudioHapticPixelListView : View {
         // the view itself
         GeometryReader { geo in
             ZStack{
-                ScrollView(.horizontal) {
-                    LazyHStack(spacing: pixelSpacing) {
-                        ForEach(0..<pixelData.pixels.count, id: \.self) { idx in
-                            GeometryReader { pixelGeo in
-                                let pixel = pixelData.safeIndex(idx)
-                                AudioHapticPixelView(pixel: pixel)
-                                    // update scroll offset
-                                    .preference(key: OffsetPreferenceKey.self,
-                                                value: pixelGeo.frame(in: .named(pixelCoordinateSpace)).minX)
-                                    // update active pixel
-                                    .onPreferenceChange(OffsetPreferenceKey.self) {offset in // user has scrolled
-                                        if isPixelActive(globalGeo: geo, pixelGeo: pixelGeo) {
-                                            print("pixel with index \(idx) is at scroll view center")
-                                            updateHapticPlayer(activate: pixel)
-                                            // send the update the cursor on the controller
-                                            // only if it hasn't been sent yet
-                                            if (cursorMsg != idx){
-                                                cursorMsg = idx
+                ScrollViewReader { proxy in
+                    ScrollView(.horizontal) {
+                        LazyHStack(spacing: pixelSpacing) {
+                            ForEach(0..<pixelData.pixels.count, id: \.self) { idx in
+                                GeometryReader { pixelGeo in
+                                    let pixel = pixelData.safeIndex(idx)
+                                    AudioHapticPixelView(pixel: pixel)
+                                        // set an ID so we can programatically scroll to it later
+                                        .id(pixel.id)
+                                        // update scroll offset
+                                        .preference(key: OffsetPreferenceKey.self,
+                                                    value: pixelGeo.frame(in: .named(pixelCoordinateSpace)).minX)
+                                        // update active pixel
+                                        .onPreferenceChange(OffsetPreferenceKey.self) {offset in // user has scrolled
+                                            if isPixelActive(globalGeo: geo, pixelGeo: pixelGeo) {
+                                                print("pixel with index \(idx) is at scroll view center")
+                                                updateHapticPlayer(activate: pixel)
+                                                // send the update the cursor on the controller
+                                                // only if it hasn't been sent yet
+                                                if (cursorMsg != idx){
+                                                    cursorMsg = idx
+                                                }
                                             }
                                         }
-                                    }
+                                }
                             }
                         }
+                        // add padding so we can have the 0th and last pixel at the center
+                        .padding(.horizontal, geo.frame(in: .named(pixelCoordinateSpace)).width / 2)
                     }
-                    // add padding so we can have the 0th and last pixel at the center
-                    .padding(.horizontal, geo.frame(in: .named(pixelCoordinateSpace)).width / 2)
+                    .accessibilityElement()
+                    .accessibilityLabel("audio scroller")
+                    .accessibility(addTraits: .allowsDirectInteraction)
+                    .onAppear {
+                        osc.receive(on: "/cursor") { values in
+                            let pos: Int = .convert(values: values)
+                            proxy.scrollTo(pos)
+                        }
+                    }
                 }
                 .coordinateSpace(name: pixelCoordinateSpace)
                 .simultaneousGesture(zoom)
@@ -103,6 +116,8 @@ struct AudioHapticPixelListView : View {
                     .fill(.red)
                     .frame(width: 25)
             }
+            
+            
         }
     }
 }
