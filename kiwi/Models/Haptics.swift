@@ -142,8 +142,8 @@ class AudioPixelHapticPlayer: ObservableObject {
     // start the haptic player
     func start(with haptics: Haptics) { preconditionFailure("not implemented") }
     
-    // update pixel value
-    func update(value: Float) { preconditionFailure("not implemented") }
+    // update pixel value and sharpness
+    func update(intensity: Float, sharpness: Float) { preconditionFailure("not implemented") }
     
     // stop immediately
     func stop() {
@@ -174,8 +174,8 @@ class ContinuousHapticPlayer : AudioPixelHapticPlayer {
         startEvents([event])
     }
     
-    override func update(value: Float){
-        self.intensity = value // the continuous haptic player just maps the value to intensity directly
+    override func update(intensity: Float, sharpness: Float){
+        self.intensity = intensity // the continuous haptic player just maps the value to intensity directly
         self.sharpness = sharpness
         if (self.player != nil){
             let intensityParam = CHHapticDynamicParameter(parameterID: .hapticIntensityControl,
@@ -216,8 +216,9 @@ class TransientHapticPlayer : AudioPixelHapticPlayer {
         self.tap()
     }
     
-    override func update(value: Float) {
-        self.intensity = value
+    override func update(intensity: Float, sharpness: Float) {
+        self.intensity = intensity
+        self.sharpness = sharpness
         if (self.haptics != nil){
             self.tap()
         }
@@ -237,12 +238,10 @@ class PulseFMHapticPlayer : AudioPixelHapticPlayer {
         setupPulseTimer()
     }
     
-    override func update(value: Float) {
-        // TODO: smarter mapping
-        // is this a race vs timer.setEventHandler?
-//        self.frequency = (500 * value).clamped(to: 100...500)
-//        self.frequency = 1
-        self.frequency += 1
+    func update(frequency: Float, intensity: Float, sharpness: Float) {
+        self.frequency = frequency
+        self.intensity = intensity
+        self.sharpness = sharpness
     }
     
     func setupPulseTimer() {

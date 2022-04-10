@@ -33,9 +33,23 @@ struct AudioHapticPixelListView : View {
     
     // zoom gesture
     @OSCState(name: "/zoom") var zoomMsg: CGFloat = 1.0
+    private var lastZoomAmt: CGFloat = 1.0
+    var zoomPlayer = PulseFMHapticPlayer()
     var zoom: some Gesture {
         MagnificationGesture()
-            .onEnded{ value in
+            .onChanged { value in
+                print("zoomed by \(value)")
+                var zoomVal = value
+                if (zoomVal < 1){
+                    zoomVal = 1 / zoomVal
+                }
+                zoomPlayer.update(frequency: Float(4 * zoomVal), intensity: 1.0, sharpness: 1.0)
+                if (zoomPlayer.player == nil) {
+                    zoomPlayer.start(with: self.haptics)
+                }
+            }
+            .onEnded { value in
+                zoomPlayer.stop()
                 DispatchQueue.main.async {
                     // TODO: need to clear the pixels somehow?
                     zoomMsg = value
@@ -54,7 +68,8 @@ struct AudioHapticPixelListView : View {
         print("updating player to value: \(pixel.value)")
         
         // update player params
-        self.player.update(value: Float(pixel.value))
+        self.player.update(intensity: Float(pixel.value),
+                           sharpness: 0.5)
         
         // if the player is off, start it
         if (self.player.player == nil) {
@@ -82,12 +97,12 @@ struct AudioHapticPixelListView : View {
                                         // update active pixel
                                         .onPreferenceChange(OffsetPreferenceKey.self) {offset in // user has scrolled
                                             if isPixelActive(globalGeo: geo, pixelGeo: pixelGeo) {
-                                                print("pixel with index \(idx) is at scroll view center")
+                                                print("pixel with index \(pixel.id) is at scroll view center")
                                                 updateHapticPlayer(activate: pixel)
                                                 // send the update the cursor on the controller
                                                 // only if it hasn't been sent yet
-                                                if (cursorMsg != idx){
-                                                    cursorMsg = idx
+                                                if (cursorMsg != pixel.id){
+                                                    cursorMsg = pixel.id
                                                 }
                                             }
                                         }
