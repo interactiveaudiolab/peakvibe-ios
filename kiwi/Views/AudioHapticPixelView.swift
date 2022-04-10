@@ -32,7 +32,7 @@ struct AudioHapticPixelView_Previews: PreviewProvider {
     static var pixels =  PixelData().pixels
     static var previews: some View {
         AudioHapticPixelView(
-            pixel: pixels[0]
+            pixel: pixels.elements[0].1
         )
     }
 }

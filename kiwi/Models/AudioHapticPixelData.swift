@@ -6,50 +6,40 @@
 //
 
 import Foundation
-import Combine
 import SwiftUI
 import SwiftUIOSC
-import XCTest
-import CoreHaptics
+import OrderedCollections
+
+// safe out-of-bounds indexing
+extension Collection {
+
+    /// Returns the element at the specified index if it is within bounds, otherwise nil.
+    subscript (safe index: Index) -> Element? {
+        return indices.contains(index) ? self[index] : nil
+    }
+}
+
 
 final class PixelData: ObservableObject {
-    @Published var pixels: [AudioHapticPixel] = []
+    @Published var pixels: OrderedDictionary<Int, AudioHapticPixel> = [:]
     @ObservedObject var osc: OSC = .shared
     
     // assumes that array of pixels has continously increasing ids
+    // TODO: use an orderedDict instead and just sort after insertion
     func addPixels(_ newPixels: inout [AudioHapticPixel]) {
-        if (self.pixels.isEmpty) {
-            self.pixels = newPixels
-            return
+        for pixel in newPixels {
+            self.pixels[pixel.id] = pixel
         }
         
-        if (newPixels.isEmpty) {
-            return
+        self.pixels.sort() { pix1, pix2 in
+            return pix1.1.id < pix2.1.id
         }
-        
-        var startOffset = newPixels.first!.id - self.pixels.first!.id
-        var endOffset = newPixels.last!.id - self.pixels.last!.id
-        
-        // if the startOffset is negative,
-        // it means we need to insert pixels at the beginning
-        while (startOffset < 0) {
-            self.pixels.insert(newPixels.removeFirst(), at: 0)
-            startOffset += 1
-        }
-        
-        // if the endOffset is positive
-        // it means we need to insert pixels at the end
-        while (endOffset > 0) {
-            self.pixels.insert(newPixels.popLast()!, at: self.pixels.count)
-            endOffset -= 1
-        }
-        
-        // now that bounds have been adjusted, just replace the subrange
-        let localStartIdx = newPixels.first!.id - self.pixels.first!.id
-        let localEndIdx = localStartIdx + newPixels.count
-        self.pixels.replaceSubrange(localStartIdx...localEndIdx, with: newPixels)
     }
     
+    func safeIndex(_ at: Int) -> AudioHapticPixel {
+        let res = self.pixels.elements[safe: at] ?? (at, AudioHapticPixel(id:0, value:0))
+        return res.1
+    }
     
     func prepare() {
         let stat: Bool = true
@@ -60,14 +50,25 @@ final class PixelData: ObservableObject {
             let newPixel: AudioHapticPixel = loadFromString(pixelsStr) ?? AudioHapticPixel.init(id: 0, value: 0)
             var newPixels = [newPixel]
             
-            self.addPixels(&newPixels)
+            DispatchQueue.main.async {
+                self.addPixels(&newPixels)
+            }
+            
         })
         
         osc.receive(on: "/pixels", { values in
             let pixelsStr: String = .convert(values: values)
             var newPixels: [AudioHapticPixel] = loadFromString(pixelsStr) ?? []
             
-            self.addPixels(&newPixels)
+            DispatchQueue.main.async {
+                self.addPixels(&newPixels)
+            }
+        })
+        
+        osc.receive(on: "/pixels/clear", {values in
+            DispatchQueue.main.async {
+                self.pixels.removeAll(keepingCapacity: true)
+            }
         })
     }
 }

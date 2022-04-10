@@ -5,6 +5,7 @@
 	<key>NSBonjourServices</key>
 	<array>
 		<string>_test._tcp</string>
+		<string>_airplay._tcp</string>
 	</array>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Use this to pair iOS to a reaper controller</string>

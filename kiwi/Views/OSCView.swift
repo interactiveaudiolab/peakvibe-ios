@@ -168,14 +168,36 @@ struct OSCSettingsView: View {
             osc.clientPort = 8001
             osc.serverPort = 8000
             
-            let browser: Bonjour = Bonjour()
-            // This will find all HTTP servers - Check out Bonjour.Services for common services
-            browser.findService(Bonjour.Services.AirPlay, domain: Bonjour.LocalDomain) { (services) in
-                // Do something with your services!
-                // services will be an empty array if nothing was found
-                print("services found: \(services)")
-            }
+//            let browser: Bonjour = Bonjour()
+//            // This will find all HTTP servers - Check out Bonjour.Services for common services
+//            browser.findService(Bonjour.Services.AirPlay, domain: Bonjour.LocalDomain) { (services) in
+//                // Do something with your services!
+//                // services will be an empty array if nothing was found
+//                print("services found: \(services)")
+//            }
+
+//            browser.findDomains() { domains in
+//                print("domains found: \(domains)")
+//
+//            }
             
+//
+            var sdRef: DNSServiceRef?
+
+            let err = DNSServiceBrowse(
+                &sdRef,
+                0,
+                0,
+                "_airplay._tcp",
+                "local.",
+                { (sdRef, flags, interfaceIndex, errorCode, serviceName, regtype, replyDomain, context) in
+                    print("serviceName: \(serviceName)")
+                    print("replyDomain: \(replyDomain)")
+                },
+                nil
+            )
+
+            print(err)
         }
     }
 }

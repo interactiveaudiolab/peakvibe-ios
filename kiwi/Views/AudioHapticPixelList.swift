@@ -43,21 +43,7 @@ struct AudioHapticPixelListView : View {
                 }
             }
     }
-    //
-    
-//    // unused for now (adding this gesture breaks scrolling) :(
-//    var body: some View {
-//        let tap = DragGesture(minimumDistance: 0)
-//            .onChanged { value in
-//                if (self.player.player == nil) {
-//                    self.player.start(with: self.haptics)
-//                    print("started continuous player")
-//                }
-//            }
-//            .onEnded({ _ in
-//                self.player.stop(atTime: 0)
-//                print("stopped continuous player")
-//            })
+
     func isPixelActive(globalGeo: GeometryProxy, pixelGeo: GeometryProxy) -> Bool {
         let pixFrame: CGRect = pixelGeo.frame(in: .named(pixelCoordinateSpace)) // frame for this one pixel
         let scrollViewCenter: CGPoint = globalGeo.frame(in: .named(pixelCoordinateSpace)).center // center of the scroll view
@@ -83,9 +69,9 @@ struct AudioHapticPixelListView : View {
             ZStack{
                 ScrollView(.horizontal) {
                     LazyHStack(spacing: pixelSpacing) {
-                        List(pixelData.pixels) { pixel in
+                        ForEach(0..<pixelData.pixels.count, id: \.self) { idx in
                             GeometryReader { pixelGeo in
-                                let idx = pixel.id
+                                let pixel = pixelData.safeIndex(idx)
                                 AudioHapticPixelView(pixel: pixel)
                                     // update scroll offset
                                     .preference(key: OffsetPreferenceKey.self,

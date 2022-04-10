@@ -14,6 +14,9 @@
 		9A36E10A27A86ED800CF9989 /* kiwiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36E10927A86ED800CF9989 /* kiwiTests.swift */; };
 		9A36E11527A86ED800CF9989 /* kiwiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36E11427A86ED800CF9989 /* kiwiUITests.swift */; };
 		9A36E12327A8837900CF9989 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36E12227A8837900CF9989 /* Haptics.swift */; };
+		9A727E6528030B2600172FF9 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 9A727E6428030B2600172FF9 /* Collections */; };
+		9A727E6728030B2600172FF9 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 9A727E6628030B2600172FF9 /* DequeModule */; };
+		9A727E6928030B2600172FF9 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 9A727E6828030B2600172FF9 /* OrderedCollections */; };
 		9AA0089F27C68AB100359374 /* OSCView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA0089E27C68AB100359374 /* OSCView.swift */; };
 		9AA008A227C6B8DA00359374 /* GetIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA008A127C6B8DA00359374 /* GetIP.swift */; };
 		9AA008A527C6C91D00359374 /* SwiftUIOSC in Frameworks */ = {isa = PBXBuildFile; productRef = 9AA008A427C6C91D00359374 /* SwiftUIOSC */; };
@@ -74,7 +77,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A727E6528030B2600172FF9 /* Collections in Frameworks */,
 				9AA008A527C6C91D00359374 /* SwiftUIOSC in Frameworks */,
+				9A727E6928030B2600172FF9 /* OrderedCollections in Frameworks */,
+				9A727E6728030B2600172FF9 /* DequeModule in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,6 +228,9 @@
 			name = kiwi;
 			packageProductDependencies = (
 				9AA008A427C6C91D00359374 /* SwiftUIOSC */,
+				9A727E6428030B2600172FF9 /* Collections */,
+				9A727E6628030B2600172FF9 /* DequeModule */,
+				9A727E6828030B2600172FF9 /* OrderedCollections */,
 			);
 			productName = kiwi;
 			productReference = 9A36E0F427A86ED600CF9989 /* kiwi.app */;
@@ -296,6 +305,7 @@
 			mainGroup = 9A36E0EB27A86ED600CF9989;
 			packageReferences = (
 				9AA008A327C6C91D00359374 /* XCRemoteSwiftPackageReference "SwiftUIOSC" */,
+				9A727E6328030B2600172FF9 /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = 9A36E0F527A86ED600CF9989 /* Products */;
 			projectDirPath = "";
@@ -670,6 +680,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9A727E6328030B2600172FF9 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		9AA008A327C6C91D00359374 /* XCRemoteSwiftPackageReference "SwiftUIOSC" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/heestand-xyz/SwiftUIOSC";
@@ -681,6 +699,21 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9A727E6428030B2600172FF9 /* Collections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9A727E6328030B2600172FF9 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = Collections;
+		};
+		9A727E6628030B2600172FF9 /* DequeModule */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9A727E6328030B2600172FF9 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = DequeModule;
+		};
+		9A727E6828030B2600172FF9 /* OrderedCollections */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9A727E6328030B2600172FF9 /* XCRemoteSwiftPackageReference "swift-collections" */;
+			productName = OrderedCollections;
+		};
 		9AA008A427C6C91D00359374 /* SwiftUIOSC */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9AA008A327C6C91D00359374 /* XCRemoteSwiftPackageReference "SwiftUIOSC" */;
