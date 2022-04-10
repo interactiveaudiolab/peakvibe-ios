@@ -25,7 +25,7 @@ struct AudioHapticPixelListView : View {
     
     // haptics
     @EnvironmentObject var haptics: Haptics
-    @StateObject var player = ContinuousHapticPlayer()
+    @StateObject var player = TransientHapticPlayer()
     
     
     // osc stuff
@@ -127,6 +127,6 @@ struct AudioHapticPixelListView_Previews: PreviewProvider {
         AudioHapticPixelListView()
             .environmentObject(PixelData())
             .environmentObject(Haptics())
-            .environmentObject(ContinuousHapticPlayer())
+            .environmentObject(TransientHapticPlayer())
     }
 }

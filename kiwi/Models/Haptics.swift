@@ -157,7 +157,7 @@ class AudioPixelHapticPlayer: ObservableObject {
 }
 
 
-// a haptic player that works via changes in intensity and sharpness
+// a continuous haptic player that works via changes in intensity and sharpness
 class ContinuousHapticPlayer : AudioPixelHapticPlayer {
     
     override func start(with haptics: Haptics) {
@@ -189,6 +189,37 @@ class ContinuousHapticPlayer : AudioPixelHapticPlayer {
             } catch let error {
                 print("Error updating player parameters: \(error)")
             }
+        }
+    }
+}
+
+// use me to send single transient taps every update() call
+class TransientHapticPlayer : AudioPixelHapticPlayer {
+    
+    private func tap() {
+        let intensityParam = CHHapticEventParameter(parameterID: .hapticIntensity,
+                                                    value: self.intensity)
+        let sharpnessParam = CHHapticEventParameter(parameterID: .hapticSharpness,
+                                                    value: self.sharpness)
+        
+        
+        let event = CHHapticEvent(eventType: .hapticTransient,
+                                  parameters: [intensityParam, sharpnessParam],
+                                  relativeTime: 0)
+        
+        startEvents([event])
+    }
+    
+    
+    override func start(with haptics: Haptics) {
+        self.haptics = haptics
+        self.tap()
+    }
+    
+    override func update(value: Float) {
+        self.intensity = value
+        if (self.haptics != nil){
+            self.tap()
         }
     }
 }
