@@ -128,9 +128,9 @@ class AudioPixelHapticPlayer: ObservableObject {
             let pattern = try CHHapticPattern(events: events, parameters: [])
             self.player = try self.haptics.engine.makeAdvancedPlayer(with: pattern)
             self.player.completionHandler = { error in
-                print("haptic player completed.")
+//                print("haptic player completed.")
                 if let error = error {
-                    print("error: \(error)")
+                    print("haptic error: \(error)")
                 }
             }
             try self.player.start(atTime: CHHapticTimeImmediate)
@@ -235,7 +235,7 @@ class PulseFMHapticPlayer : AudioPixelHapticPlayer {
     
     override func start(with haptics: Haptics) {
         self.haptics = haptics
-        setupPulseTimer()
+        startPulseTimer()
     }
     
     func update(frequency: Float, intensity: Float, sharpness: Float) {
@@ -244,7 +244,7 @@ class PulseFMHapticPlayer : AudioPixelHapticPlayer {
         self.sharpness = sharpness
     }
     
-    func setupPulseTimer() {
+    func startPulseTimer() {
         guard pulseTimer == nil else { return }
         // play immediately
         self.playHapticTransient(intensity: self.intensity,

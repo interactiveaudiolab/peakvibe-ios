@@ -21,8 +21,8 @@ extension Collection {
 
 
 final class PixelData: ObservableObject {
-    @Published var pixels: OrderedDictionary<Int, AudioHapticPixel> = [:]
     @ObservedObject var osc: OSC = .shared
+    @Published var pixels: OrderedDictionary<Int, AudioHapticPixel> = [:]
     
     // assumes that array of pixels has continously increasing ids
     // TODO: use an orderedDict instead and just sort after insertion
@@ -31,9 +31,9 @@ final class PixelData: ObservableObject {
             self.pixels[pixel.id] = pixel
         }
         
-        self.pixels.sort() { pix1, pix2 in
-            return pix1.1.id < pix2.1.id
-        }
+//        self.pixels.sort() { pix1, pix2 in
+//            return pix1.1.id < pix2.1.id
+//        }
     }
     
     func safeIndex(_ at: Int) -> AudioHapticPixel {

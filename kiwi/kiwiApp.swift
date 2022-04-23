@@ -6,6 +6,14 @@
 //
 
 import SwiftUI
+//
+//public func print(_ object: Any...) {
+////    #if DEBUGGING
+////    for item in object {
+////        Swift.print(item)
+////    }
+////    #endif
+//}
 
 @main
 struct kiwiApp: App {

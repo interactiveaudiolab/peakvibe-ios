@@ -14,6 +14,7 @@
 		9A36E10A27A86ED800CF9989 /* kiwiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36E10927A86ED800CF9989 /* kiwiTests.swift */; };
 		9A36E11527A86ED800CF9989 /* kiwiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36E11427A86ED800CF9989 /* kiwiUITests.swift */; };
 		9A36E12327A8837900CF9989 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36E12227A8837900CF9989 /* Haptics.swift */; };
+		9A3D8A6A2812E9EA00155142 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 9A3D8A692812E9EA00155142 /* Introspect */; };
 		9A727E6528030B2600172FF9 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 9A727E6428030B2600172FF9 /* Collections */; };
 		9A727E6728030B2600172FF9 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 9A727E6628030B2600172FF9 /* DequeModule */; };
 		9A727E6928030B2600172FF9 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 9A727E6828030B2600172FF9 /* OrderedCollections */; };
@@ -79,6 +80,7 @@
 			files = (
 				9A727E6528030B2600172FF9 /* Collections in Frameworks */,
 				9AA008A527C6C91D00359374 /* SwiftUIOSC in Frameworks */,
+				9A3D8A6A2812E9EA00155142 /* Introspect in Frameworks */,
 				9A727E6928030B2600172FF9 /* OrderedCollections in Frameworks */,
 				9A727E6728030B2600172FF9 /* DequeModule in Frameworks */,
 			);
@@ -231,6 +233,7 @@
 				9A727E6428030B2600172FF9 /* Collections */,
 				9A727E6628030B2600172FF9 /* DequeModule */,
 				9A727E6828030B2600172FF9 /* OrderedCollections */,
+				9A3D8A692812E9EA00155142 /* Introspect */,
 			);
 			productName = kiwi;
 			productReference = 9A36E0F427A86ED600CF9989 /* kiwi.app */;
@@ -306,6 +309,7 @@
 			packageReferences = (
 				9AA008A327C6C91D00359374 /* XCRemoteSwiftPackageReference "SwiftUIOSC" */,
 				9A727E6328030B2600172FF9 /* XCRemoteSwiftPackageReference "swift-collections" */,
+				9A3D8A682812E9EA00155142 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */,
 			);
 			productRefGroup = 9A36E0F527A86ED600CF9989 /* Products */;
 			projectDirPath = "";
@@ -680,6 +684,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		9A3D8A682812E9EA00155142 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/siteline/SwiftUI-Introspect";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.1.4;
+			};
+		};
 		9A727E6328030B2600172FF9 /* XCRemoteSwiftPackageReference "swift-collections" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/apple/swift-collections.git";
@@ -699,6 +711,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		9A3D8A692812E9EA00155142 /* Introspect */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9A3D8A682812E9EA00155142 /* XCRemoteSwiftPackageReference "SwiftUI-Introspect" */;
+			productName = Introspect;
+		};
 		9A727E6428030B2600172FF9 /* Collections */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 9A727E6328030B2600172FF9 /* XCRemoteSwiftPackageReference "swift-collections" */;
