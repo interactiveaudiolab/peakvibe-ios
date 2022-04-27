@@ -16,7 +16,7 @@ let pixelCoordinateSpace: String = "pixelStack"
 // unused right now
 class HapticScrollController :  UIViewController, UIScrollViewDelegate, ObservableObject {
     var activePixel: AudioHapticPixel = AudioHapticPixel(id: 0, value: 0.0)
-    var pixelData: PixelData?
+    var pixelData: PixelCollection?
     
     var cursorMsg = 0
     @ObservedObject var osc: OSC = .shared
@@ -26,51 +26,31 @@ class HapticScrollController :  UIViewController, UIScrollViewDelegate, Observab
     
     var isProgramaticallyScrolling = true
     
-    func setup(pixels: PixelData, haptics: Haptics) {
+    func setup(pixels: PixelCollection, haptics: Haptics) {
         self.pixelData = pixels
         self.haptics = haptics
     }
     
     func updateHapticPlayer(activate pixel: AudioHapticPixel) {
-//        print("updating player to value: \(pixel.value)")
-        
         // update player params
-        self.player.update(intensity: Float(pixel.value),
+        self.player.update(intensity: sqrt(Float(pixel.value)),
                            sharpness: 0.5)
         
         // if the player is off, start
         if let haptics: Haptics = self.haptics {
             if (self.player.player == nil) {
                 self.player.start(with: haptics)
-//                print("started haptic player")
             }
         }
     }
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        
-        // bail if we're programatically scrolling
-        if (isProgramaticallyScrolling) {
-            print("programatically scrolling. no need to send cursor sync yet")
-//            isProgramaticallyScrolling = false
-            return
-        }
-        
+        guard let pixelData = self.pixelData else { return }
         updateHapticPlayer(activate: activePixel)
+        pixelData.cursorPos = activePixel.id
         
         // send the update the cursor on the controller
-        // only if it hasn't been sent 
-        if (cursorMsg != activePixel.id && !pixelData!.pixels.isEmpty){
-            osc.send(Int.convert(value: activePixel.id), at: "/set_cursor")
-            cursorMsg = activePixel.id
-            
-            if (activePixel.id == 0 || activePixel.id == (pixelData!.pixels.values.last?.id ?? 0)) {
-                endOfScrollAlert(0.15)
-                DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
-                    self.endOfScrollAlert(0.15)
-                }
-            }
-        }
+        // only if it hasn't been sent
     }
     
     func endOfScrollAlert(_ dur: TimeInterval) {
@@ -86,18 +66,22 @@ class HapticScrollController :  UIViewController, UIScrollViewDelegate, Observab
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-        isProgramaticallyScrolling = false
-        print("scrollview will begin dragging")
+//        print("scrollview will begin dragging")
+    }
+    
+    func scrollViewWillEndDragging(_ scrollView: UIScrollView) {
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView) {
-        print("scrollview did end dragging")
-        isProgramaticallyScrolling = true
+//        print("scrollview did end dragging")
+    }
+    
+    func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
+        scrollView.setContentOffset(scrollView.contentOffset, animated:false)
     }
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        print("scrollview did end decelerating")
-        isProgramaticallyScrolling = true
+//        print("scrollview did end decelerating")
     }
     
     
@@ -111,7 +95,7 @@ private struct OffsetPreferenceKey: PreferenceKey {
 
 struct AudioHapticPixelListView : View {
     // data
-    @EnvironmentObject var pixelData: PixelData
+    @EnvironmentObject var pixelData: PixelCollection
     private var pixelSpacing: CGFloat = 0 // need to stop
     
     // haptics
@@ -162,19 +146,17 @@ struct AudioHapticPixelListView : View {
                 ScrollViewReader { proxy in
                     ScrollView(.horizontal) {
                         LazyHStack(spacing: pixelSpacing) {
-                            ForEach(0..<pixelData.pixels.count, id: \.self) { idx in
+                            ForEach(0..<pixelData.count, id: \.self) { idx in
                                 GeometryReader { pixelGeo in
-                                    let pixel = pixelData.safeIndex(idx)
+                                    let pixel = pixelData[idx]
                                     AudioHapticPixelView(pixel: pixel)
-                                        // set an ID so we can programatically scroll to it later
-                                        .id(pixel.id)
                                         // update scroll offset
                                         .preference(key: OffsetPreferenceKey.self,
                                                     value: pixelGeo.frame(in: .named(pixelCoordinateSpace)).minX)
                                         // update active pixel
                                         .onPreferenceChange(OffsetPreferenceKey.self) {offset in // user has scrolled
                                             if isPixelActive(globalGeo: geo, pixelGeo: pixelGeo) {
-                                                print("pixel with index \(pixel.id) is at scroll view center")
+//                                                print("pixel with index \(pixel.id) is at scroll view center")
                                                 scrollControl.activePixel = pixel
                                             }
                                         }
@@ -185,34 +167,19 @@ struct AudioHapticPixelListView : View {
                         .padding(.horizontal, geo.frame(in: .named(pixelCoordinateSpace)).width / 2)
                     }
                     .introspectScrollView { scrollview in
-                        scrollview.decelerationRate = .init(rawValue: -1.0)
+                        scrollview.decelerationRate = .init(rawValue: 100.0)
                         scrollview.delegate = scrollControl
+                    }
+                    .onAppear{
+                        pixelData.loadAllPixels()
+                        scrollControl.setup(pixels: pixelData,
+                                            haptics: haptics)
                     }
                     .accessibilityElement()
                     .accessibilityLabel("audio scroller")
                     .accessibility(addTraits: .allowsDirectInteraction)
-                    .onAppear {
-                        osc.receive(on: "/cursor") { values in
-                            let pos: Int = .convert(values: values)
-                                            .clamped(to: -1...pixelData.pixels.count-1)
-                            
-                            // if the pixels are currently empty,
-                            // wait for a little bit before you programatically scroll
-                            let delay = pixelData.pixels.isEmpty ? 1.0 : 0.5
-                            DispatchQueue.main.asyncAfter(deadline: .now() + delay){
-                                scrollControl.isProgramaticallyScrolling = true
-                                proxy.scrollTo(pos, anchor: .center)
-//                                scrollControl.isProgramaticallyScrolling = false
-                            }
-                        }
-                    }
                     .coordinateSpace(name: pixelCoordinateSpace)
                     .simultaneousGesture(zoom)
-                    .onAppear{
-                        pixelData.prepare()
-                        scrollControl.setup(pixels: pixelData,
-                                            haptics: haptics)
-                    }
                 }
                 
                 // add a cursor for visual guidance
@@ -220,7 +187,14 @@ struct AudioHapticPixelListView : View {
                     .fill(.red)
                     .frame(width: 25)
             }
-            
+            Button(action: {
+                osc.send(Bool.convert(value: true), at: "/sync")
+            }) {
+                Text("sync")
+                    .background(Color.green)
+                    .foregroundColor(Color.white)
+                    .padding()
+            }
             
         }
     }
@@ -229,7 +203,7 @@ struct AudioHapticPixelListView : View {
 struct AudioHapticPixelListView_Previews: PreviewProvider {
     static var previews: some View {
         AudioHapticPixelListView()
-            .environmentObject(PixelData())
+            .environmentObject(PixelCollection())
             .environmentObject(Haptics())
             .environmentObject(TransientHapticPlayer())
     }

@@ -17,7 +17,7 @@ import SwiftUI
 
 @main
 struct kiwiApp: App {
-    @StateObject var pixelData = PixelData()
+    @StateObject var pixelData = PixelCollection()
     @StateObject var haptics = Haptics()
     
     var body: some Scene {

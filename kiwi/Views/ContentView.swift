@@ -56,7 +56,7 @@ struct ContentView_Previews: PreviewProvider {
         if #available(iOS 15.0, *) {
             ContentView()
                 .previewInterfaceOrientation(.landscapeRight)
-                .environmentObject(PixelData())
+                .environmentObject(PixelCollection())
                 .environmentObject(Haptics())
         } else {
             // Fallback on earlier versions

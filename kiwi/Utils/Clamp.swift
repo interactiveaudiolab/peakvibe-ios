@@ -12,3 +12,9 @@ extension Comparable {
         return min(max(self, limits.lowerBound), limits.upperBound)
     }
 }
+
+extension Int {
+    func clamped(to limits: Range<Self>) -> Self {
+        return Swift.min(Swift.max(self, limits.lowerBound), limits.upperBound - 1)
+    }
+}
