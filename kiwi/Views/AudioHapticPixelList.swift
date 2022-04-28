@@ -25,7 +25,7 @@ class HapticScrollController :  UIViewController, UIScrollViewDelegate, Observab
     var haptics: Haptics?
     
     var isProgramaticallyScrolling = true
-    
+
     func setup(pixels: PixelCollection, haptics: Haptics) {
         self.pixelData = pixels
         self.haptics = haptics
@@ -43,14 +43,20 @@ class HapticScrollController :  UIViewController, UIScrollViewDelegate, Observab
             }
         }
     }
-    
+
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        guard let pixelData = self.pixelData else { return }
-        updateHapticPlayer(activate: activePixel)
-        pixelData.cursorPos = activePixel.id
+        // don't do anything if we're programmatically scrolling
+        if (isProgramaticallyScrolling) {
+            isProgramaticallyScrolling = false
+            return
+        }
         
-        // send the update the cursor on the controller
-        // only if it hasn't been sent
+        
+        // this gets called many times,
+        // so don't trigger a loadNewPixels
+        guard let pixelData = self.pixelData else { return }
+        pixelData.setCursor(newPos: activePixel.id)
+        updateHapticPlayer(activate: activePixel)
     }
     
     func endOfScrollAlert(_ dur: TimeInterval) {
@@ -66,14 +72,21 @@ class HapticScrollController :  UIViewController, UIScrollViewDelegate, Observab
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
-//        print("scrollview will begin dragging")
+        // load new pixels if the user puts their finger on screen!
+        // TODO: why isn't DidEndDragging being called?
+        // ideally, that's where we want to load the next round of pixels
+        guard let pixelData = self.pixelData else { return }
+        pixelData.setAnchor(newPos: activePixel.id)
+        print("scrollview will begin dragging")
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView) {
+        print("scrollview will end dragging")
+        
     }
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView) {
-//        print("scrollview did end dragging")
+        print("scrollview did end dragging")
     }
     
     func scrollViewWillBeginDecelerating(_ scrollView: UIScrollView) {
@@ -127,6 +140,7 @@ struct AudioHapticPixelListView : View {
                     // TODO: need to clear the pixels somehow?
                     self.zoomMsg = value
                     print("zoomed by \(value)")
+                    self.pixelData.loadAllPixels()
                 }
             }
     }
@@ -150,6 +164,7 @@ struct AudioHapticPixelListView : View {
                                 GeometryReader { pixelGeo in
                                     let pixel = pixelData[idx]
                                     AudioHapticPixelView(pixel: pixel)
+                                        .id(idx)
                                         // update scroll offset
                                         .preference(key: OffsetPreferenceKey.self,
                                                     value: pixelGeo.frame(in: .named(pixelCoordinateSpace)).minX)
@@ -174,6 +189,19 @@ struct AudioHapticPixelListView : View {
                         pixelData.loadAllPixels()
                         scrollControl.setup(pixels: pixelData,
                                             haptics: haptics)
+                        
+                        osc.receive(on: "/cursor") { values in
+                            print("received cursor update: \(values)")
+                            let pos: Int = .convert(values: values)
+                            pixelData.setCursor(newPos: pos)
+                            pixelData.loadAllPixels() {
+                                print("programmatically scrolling to \(pos)")
+                                scrollControl.isProgramaticallyScrolling = true
+                                proxy.scrollTo(pos)
+                                pixelData.setCursor(newPos: pos)
+                                pixelData.setAnchor(newPos: pos)
+                            }
+                        }
                     }
                     .accessibilityElement()
                     .accessibilityLabel("audio scroller")
@@ -188,6 +216,7 @@ struct AudioHapticPixelListView : View {
                     .frame(width: 25)
             }
             Button(action: {
+                print("sync requested. sending sync message")
                 osc.send(Bool.convert(value: true), at: "/sync")
             }) {
                 Text("sync")
