@@ -15,7 +15,7 @@ struct AudioHapticPixelView : View {
     var body: some View {
         GeometryReader{ geo in
             VStack(alignment: .center){
-                Text("\(pixel.id)")
+//                Text("\(pixel.id)")
                 Spacer()
                 RoundedRectangle(cornerRadius: 40)
                     .fill(LinearGradient(gradient: Gradient(colors: [.blue, .orange]),

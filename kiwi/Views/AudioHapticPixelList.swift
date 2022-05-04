@@ -215,17 +215,26 @@ struct AudioHapticPixelListView : View {
                     .fill(.red)
                     .frame(width: 25)
             }
-            Button(action: {
-                print("sync requested. sending sync message")
-                osc.send(Bool.convert(value: true), at: "/sync")
-            }) {
-                Text("sync")
-                    .background(Color.green)
-                    .foregroundColor(Color.white)
-                    .padding()
-            }
-            
         }
+    }
+}
+
+struct SyncButton : View {
+    @ObservedObject var osc: OSC = .shared
+    
+    var body: some View {
+        Button(action: {
+            print("sync requested. sending sync message")
+            osc.send(Bool.convert(value: true), at: "/sync")
+        }) {
+            Text("sync")
+                .frame(maxWidth: .infinity, minHeight: 50)
+                .background(Color.green)
+                .foregroundColor(Color.white)
+                .padding()
+                
+        }
+        .frame(maxWidth: .infinity)
     }
 }
 
