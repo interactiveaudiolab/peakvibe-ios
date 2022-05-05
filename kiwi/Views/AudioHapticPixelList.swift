@@ -186,6 +186,8 @@ struct AudioHapticPixelListView : View {
                         scrollview.delegate = scrollControl
                     }
                     .onAppear{
+                        osc.send("mipmap", at: "/set_mode")
+                        
                         pixelData.loadAllPixels()
                         scrollControl.setup(pixels: pixelData,
                                             haptics: haptics)

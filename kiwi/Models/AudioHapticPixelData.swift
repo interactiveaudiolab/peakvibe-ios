@@ -39,7 +39,7 @@ final class PixelCollection: ObservableObject, RandomAccessCollection {
         if offset == 0 {
             return
         }
-        else if offset > self.pixels.count {
+        else if offset > self.pixels.count / 2 {
             loadAllPixels()
             anchorPos = newPos
             return

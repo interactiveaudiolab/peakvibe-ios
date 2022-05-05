@@ -119,54 +119,46 @@ struct OSCSettingsView: View {
                 HStack {
                     Text("IP Address:")
                         .frame(width: 200, alignment: .trailing)
-                    TextField("Address", text: $osc.clientAddress)
+                    TextField("Address", text: $osc.clientAddress, onCommit: {
+                        UserDefaults.standard.set(osc.clientAddress, forKey: "clientAddress")
+                    })
                         .border(Color.blue, width: 1.5)
+                        .onAppear {
+                            osc.clientAddress = UserDefaults.standard.string(forKey: "clientAddress") ?? "0.0.0.0"
+                            osc.clientPort = 8001;
+                            osc.serverPort = 8000;
+                        }
                 }
                 
-                HStack {
-                    Text("Send Port:")
-                        .frame(width: 200, alignment: .trailing)
-                    
-                    TextField("Send Port", text: Binding<String>(get: {
-                        "\(osc.clientPort)"
-                    }, set: { text in
-                        guard let port = Int(text) else { return }
-                        osc.clientPort = port
-                    }))
-                        .border(Color.blue, width: 1.5)
-                }
-                
-                HStack {
-                    Text("Receive Port:")
-                        .frame(width: 200, alignment: .trailing)
-                    
-                    TextField("Receive Port", text: Binding<String>(get: {
-                        "\(osc.serverPort)"
-                    }, set: { text in
-                        guard let port = Int(text) else { return }
-                        osc.serverPort = port
-                    }))
-                        .border(Color.blue, width: 1.5)
-                }
+//                HStack {
+//                    Text("Send Port:")
+//                        .frame(width: 200, alignment: .trailing)
+//
+//                    TextField("Send Port", text: Binding<String>(get: {
+//                        "\(osc.clientPort)"
+//                    }, set: { text in
+//                        guard let port = Int(text) else { return }
+//                        osc.clientPort = port
+//                    }))
+//                        .border(Color.blue, width: 1.5)
+//                }
+//
+//                HStack {
+//                    Text("Receive Port:")
+//                        .frame(width: 200, alignment: .trailing)
+//
+//                    TextField("Receive Port", text: Binding<String>(get: {
+//                        "\(osc.serverPort)"
+//                    }, set: { text in
+//                        guard let port = Int(text) else { return }
+//                        osc.serverPort = port
+//                    }))
+//                        .border(Color.blue, width: 1.5)
+//                }
             }
-            
-            
-            // test
-            Group {
-                Divider()
-                Text("Message Tester")
-                    .background(Color.blue)
-                OSCTestView()
-            }
-            Divider()
         }
         .font(.system(.body, design: .monospaced))
         .frame(minWidth: 300, maxWidth: 400)
         .padding()
-        .onAppear {
-            osc.clientAddress = "192.168.0.105"
-            osc.clientPort = 8001
-            osc.serverPort = 8000
-        }
     }
 }

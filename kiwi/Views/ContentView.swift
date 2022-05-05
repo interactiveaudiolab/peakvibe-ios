@@ -12,17 +12,6 @@ extension CGRect {
     var center: CGPoint { .init(x: midX, y: midY) }
 }
 
-struct HapticStatusView : View {
-    @EnvironmentObject var haptics: Haptics
-    
-    var body: some View {
-        HStack {
-            Text("Haptic Motor is ")
-            Text(haptics.engineNeedsStart ? "Not ready" : "ready")
-        }
-    }
-}
-
 struct OSCStatusBar : View {
     
     var body: some View {
@@ -30,8 +19,6 @@ struct OSCStatusBar : View {
             NavigationLink(destination: OSCSettingsView()) {
                 Label("Network Settings", systemImage: "gear")
             }
-            Spacer()
-            OSCStatus()
         }
     }
 }
@@ -45,7 +32,14 @@ struct ContentView: View {
                 OSCStatusBar()
                 Divider()
                 AudioHapticPixelListView()
-                HapticStatusView()
+                NavigationLink(destination: PeakMeterView()) {
+                    Text("Peak Meter")
+                        .frame(maxWidth: .infinity, minHeight: 50)
+                        .background(Color.blue)
+                        .foregroundColor(Color.white)
+                        .padding()
+                }
+                SyncButton()
             }
         }
     }

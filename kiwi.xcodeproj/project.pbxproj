@@ -15,6 +15,7 @@
 		9A36E11527A86ED800CF9989 /* kiwiUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36E11427A86ED800CF9989 /* kiwiUITests.swift */; };
 		9A36E12327A8837900CF9989 /* Haptics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A36E12227A8837900CF9989 /* Haptics.swift */; };
 		9A3D8A6A2812E9EA00155142 /* Introspect in Frameworks */ = {isa = PBXBuildFile; productRef = 9A3D8A692812E9EA00155142 /* Introspect */; };
+		9A545A452822D11D00F91457 /* PeakMeterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A545A442822D11D00F91457 /* PeakMeterView.swift */; };
 		9A727E6528030B2600172FF9 /* Collections in Frameworks */ = {isa = PBXBuildFile; productRef = 9A727E6428030B2600172FF9 /* Collections */; };
 		9A727E6728030B2600172FF9 /* DequeModule in Frameworks */ = {isa = PBXBuildFile; productRef = 9A727E6628030B2600172FF9 /* DequeModule */; };
 		9A727E6928030B2600172FF9 /* OrderedCollections in Frameworks */ = {isa = PBXBuildFile; productRef = 9A727E6828030B2600172FF9 /* OrderedCollections */; };
@@ -61,9 +62,10 @@
 		9A36E11427A86ED800CF9989 /* kiwiUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kiwiUITests.swift; sourceTree = "<group>"; };
 		9A36E11627A86ED800CF9989 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A36E12227A8837900CF9989 /* Haptics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Haptics.swift; sourceTree = "<group>"; };
+		9A545A442822D11D00F91457 /* PeakMeterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeakMeterView.swift; sourceTree = "<group>"; };
+		9A87B2E62824366F008DEF11 /* SwiftUIOSC */ = {isa = PBXFileReference; lastKnownFileType = wrapper; path = SwiftUIOSC; sourceTree = "<group>"; };
 		9AA0089E27C68AB100359374 /* OSCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCView.swift; sourceTree = "<group>"; };
 		9AA008A127C6B8DA00359374 /* GetIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetIP.swift; sourceTree = "<group>"; };
-		9AA008A727C6C97300359374 /* SwiftUIOSC */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = SwiftUIOSC; path = ../../../SwiftUIOSC; sourceTree = "<group>"; };
 		9AA008A827C8130900359374 /* Clamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamp.swift; sourceTree = "<group>"; };
 		9AA027A727FC998100177405 /* Bonjour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bonjour.swift; sourceTree = "<group>"; };
 		9AB58A8C27E7AC2F00E64C35 /* pixels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pixels.json; sourceTree = "<group>"; };
@@ -186,7 +188,7 @@
 		9AA008A627C6C97300359374 /* Packages */ = {
 			isa = PBXGroup;
 			children = (
-				9AA008A727C6C97300359374 /* SwiftUIOSC */,
+				9A87B2E62824366F008DEF11 /* SwiftUIOSC */,
 			);
 			name = Packages;
 			sourceTree = "<group>";
@@ -198,6 +200,7 @@
 				9ADE8DC727BEE82300D52130 /* AudioHapticPixelView.swift */,
 				9ADE8DC927BEF22500D52130 /* AudioHapticPixelList.swift */,
 				9AA0089E27C68AB100359374 /* OSCView.swift */,
+				9A545A442822D11D00F91457 /* PeakMeterView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -361,6 +364,7 @@
 				9ADE8DCC27BEF33A00D52130 /* AudioHapticPixelData.swift in Sources */,
 				9A36E0FA27A86ED700CF9989 /* ContentView.swift in Sources */,
 				9A36E0F827A86ED700CF9989 /* kiwiApp.swift in Sources */,
+				9A545A452822D11D00F91457 /* PeakMeterView.swift in Sources */,
 				9ADE8DC627BEE5F500D52130 /* AudioHapticPixel.swift in Sources */,
 				9AA027A827FC998100177405 /* Bonjour.swift in Sources */,
 				9ADE8DC827BEE82300D52130 /* AudioHapticPixelView.swift in Sources */,
