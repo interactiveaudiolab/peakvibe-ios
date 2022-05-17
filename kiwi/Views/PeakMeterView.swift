@@ -20,58 +20,70 @@ struct PeakMeterView : View {
     var osc: OSC = .shared
     @State var level: Double = 0.1
     
+    //TODO: add a UI for this
+    @State var alertThreshold: Double = -0.1 // in dB
+    
     @EnvironmentObject var haptics: Haptics
     var hapMapper = dbSoundMapper()
     var player = TransientHapticPlayer()
     @State var isClipping: Bool = false
+    
 
     var body: some View {
+        HStack(alignment: .center) {
+            Text("Alert Threshold")
+            Slider(value: $alertThreshold, in: -60.0...0.0)
+            Text("\(alertThreshold) dB")
+        }
         GeometryReader { geo in
-            Text("dB: \(amp2db(Float(level)))")
-            AudioHapticPixelView(pixel:
-                AudioHapticPixel(id: 0, value: CGFloat(level)))
-            .frame(width: geo.size.width * 0.25)
-            .position(x: geo.frame(in: .local).midX,
-                      y: geo.frame(in: .local).midY)
-            .onAppear {
-                // let the controller know what out new mode is
-                osc.send("meter", at: "/set_mode")
+            VStack {
+                Text("dB: \(amp2db(level))")
                 
-                // handle receive any peaks
-                osc.receive(on: "/peak") { values in
-                    // get the level from the read values
-                    level = .convert(values: values)
+                AudioHapticPixelView(pixel:
+                    AudioHapticPixel(id: 0, value: CGFloat(hapMapper.map(level))))
+                .frame(width: geo.size.width * 0.25)
+                .position(x: geo.frame(in: .local).midX,
+                          y: geo.frame(in: .local).midY)
+                .onAppear {
+                    // let the controller know what out new mode is
+                    osc.send("meter", at: "/set_mode")
                     
-                    guard !isClipping else {
-                        print("will not play peak, clipping.")
-                        return
-                    }
-                
-                    // if we're clipping, play the clip alert
-                    if (level > 0.97) {
-                        clipAlert(1)
-                        return
-                    }
+                    // handle receive any peaks
+                    osc.receive(on: "/peak") { values in
+                        // get the level from the read values
+                        level = .convert(values: values)
+                        
+                        guard !isClipping else {
+                            print("will not play peak, clipping.")
+                            return
+                        }
                     
-                    // map level to intensity
-                    let intensity: Float = hapMapper.map(Float(level))
-                    print("intensity is \(intensity)")
-                    level = Double(intensity)
-                    
-                    // update player params
-                    self.player.update(intensity: intensity,
-                                       sharpness: 0.6)
-                    
-                    // start player if needed
-                    if (self.player.player == nil) {
-                        self.player.start(with: haptics)
+                        // if we're clipping, play the clip alert
+                        if (level > db2amp(alertThreshold)) {
+                            clipAlert(1)
+                            return
+                        }
+                        
+                        // map level to intensity
+                        let intensity = hapMapper.map(level)
+                        print("intensity is \(intensity)")
+    //                    level = Double(intensity)
+                        
+                        // update player params
+                        self.player.update(intensity: Float(intensity),
+                                           sharpness: 0.6)
+                        
+                        // start player if needed
+                        if (self.player.player == nil) {
+                            self.player.start(with: haptics)
+                        }
                     }
                 }
             }
         }
         .accessibilityElement()
 //        .accessibilityLabel("")
-        .accessibilityLabel("\(Int(amp2db(Float(level)))) dB")
+        .accessibilityLabel("\(Int(amp2db(level))) dB")
 //        .accessibility(addTraits: .allowsDirectInteraction)
         
     }

@@ -334,8 +334,8 @@
             filePath = "kiwi/Views/PeakMeterView.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
             landmarkName = "PeakMeterView"
             landmarkType = "14">
          </BreakpointContent>
