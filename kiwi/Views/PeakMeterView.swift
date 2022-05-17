@@ -31,7 +31,7 @@ class SigmoidMapper : PeakToHapticIntensityMapper {
 class dbSoundMapper : PeakToHapticIntensityMapper {
     
     // 1 is no compression, 2 cuts it by half, and so on.
-    let ratio: Float = 4.25
+    let ratio: Float = 3.5
     
     func map(_ level: Float) -> Float {
         let dbsoundrange: ClosedRange<Float> = (-90...3)

@@ -33,7 +33,7 @@ class HapticScrollController :  UIViewController, UIScrollViewDelegate, Observab
     
     func updateHapticPlayer(activate pixel: AudioHapticPixel) {
         // update player params
-        self.player.update(intensity: sqrt(Float(pixel.value)),
+        self.player.update(intensity: Float(dbSoundMapper().map(Float(pixel.value))),
                            sharpness: 0.5)
         
         // if the player is off, start
