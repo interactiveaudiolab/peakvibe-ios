@@ -31,15 +31,7 @@ struct ContentView: View {
             VStack {
                 OSCStatusBar()
                 Divider()
-                AudioHapticPixelListView()
-                NavigationLink(destination: PeakMeterView()) {
-                    Text("Peak Meter")
-                        .frame(maxWidth: .infinity, minHeight: 50)
-                        .background(Color.blue)
-                        .foregroundColor(Color.white)
-                        .padding()
-                }
-                SyncButton()
+                PeakMeterView()
             }
         }
     }
@@ -50,7 +42,6 @@ struct ContentView_Previews: PreviewProvider {
         if #available(iOS 15.0, *) {
             ContentView()
                 .previewInterfaceOrientation(.landscapeRight)
-                .environmentObject(PixelCollection())
                 .environmentObject(Haptics())
         } else {
             // Fallback on earlier versions

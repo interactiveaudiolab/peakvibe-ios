@@ -23,12 +23,11 @@
 		9AA008A227C6B8DA00359374 /* GetIP.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA008A127C6B8DA00359374 /* GetIP.swift */; };
 		9AA008A527C6C91D00359374 /* SwiftUIOSC in Frameworks */ = {isa = PBXBuildFile; productRef = 9AA008A427C6C91D00359374 /* SwiftUIOSC */; };
 		9AA008A927C8130900359374 /* Clamp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA008A827C8130900359374 /* Clamp.swift */; };
-		9AA027A827FC998100177405 /* Bonjour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AA027A727FC998100177405 /* Bonjour.swift */; };
 		9AB58A8D27E7AC2F00E64C35 /* pixels.json in Resources */ = {isa = PBXBuildFile; fileRef = 9AB58A8C27E7AC2F00E64C35 /* pixels.json */; };
 		9ADE8DC627BEE5F500D52130 /* AudioHapticPixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DC527BEE5F500D52130 /* AudioHapticPixel.swift */; };
 		9ADE8DC827BEE82300D52130 /* AudioHapticPixelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DC727BEE82300D52130 /* AudioHapticPixelView.swift */; };
-		9ADE8DCA27BEF22500D52130 /* AudioHapticPixelList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DC927BEF22500D52130 /* AudioHapticPixelList.swift */; };
-		9ADE8DCC27BEF33A00D52130 /* AudioHapticPixelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADE8DCB27BEF33A00D52130 /* AudioHapticPixelData.swift */; };
+		9AE13A9428343BC7009A8229 /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE13A9328343BC7009A8229 /* Color.swift */; };
+		9AE13A9628343BD3009A8229 /* dB.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AE13A9528343BD3009A8229 /* dB.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -67,12 +66,11 @@
 		9AA0089E27C68AB100359374 /* OSCView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OSCView.swift; sourceTree = "<group>"; };
 		9AA008A127C6B8DA00359374 /* GetIP.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetIP.swift; sourceTree = "<group>"; };
 		9AA008A827C8130900359374 /* Clamp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Clamp.swift; sourceTree = "<group>"; };
-		9AA027A727FC998100177405 /* Bonjour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Bonjour.swift; sourceTree = "<group>"; };
 		9AB58A8C27E7AC2F00E64C35 /* pixels.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = pixels.json; sourceTree = "<group>"; };
 		9ADE8DC527BEE5F500D52130 /* AudioHapticPixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixel.swift; sourceTree = "<group>"; };
 		9ADE8DC727BEE82300D52130 /* AudioHapticPixelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixelView.swift; sourceTree = "<group>"; };
-		9ADE8DC927BEF22500D52130 /* AudioHapticPixelList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixelList.swift; sourceTree = "<group>"; };
-		9ADE8DCB27BEF33A00D52130 /* AudioHapticPixelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioHapticPixelData.swift; sourceTree = "<group>"; };
+		9AE13A9328343BC7009A8229 /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
+		9AE13A9528343BD3009A8229 /* dB.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dB.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -180,7 +178,8 @@
 			children = (
 				9AA008A127C6B8DA00359374 /* GetIP.swift */,
 				9AA008A827C8130900359374 /* Clamp.swift */,
-				9AA027A727FC998100177405 /* Bonjour.swift */,
+				9AE13A9328343BC7009A8229 /* Color.swift */,
+				9AE13A9528343BD3009A8229 /* dB.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -198,7 +197,6 @@
 			children = (
 				9A36E0F927A86ED700CF9989 /* ContentView.swift */,
 				9ADE8DC727BEE82300D52130 /* AudioHapticPixelView.swift */,
-				9ADE8DC927BEF22500D52130 /* AudioHapticPixelList.swift */,
 				9AA0089E27C68AB100359374 /* OSCView.swift */,
 				9A545A442822D11D00F91457 /* PeakMeterView.swift */,
 			);
@@ -208,7 +206,6 @@
 		9ADE8DD027BEF51500D52130 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9ADE8DCB27BEF33A00D52130 /* AudioHapticPixelData.swift */,
 				9A36E12227A8837900CF9989 /* Haptics.swift */,
 				9ADE8DC527BEE5F500D52130 /* AudioHapticPixel.swift */,
 			);
@@ -360,15 +357,14 @@
 				9AA0089F27C68AB100359374 /* OSCView.swift in Sources */,
 				9AA008A927C8130900359374 /* Clamp.swift in Sources */,
 				9A36E12327A8837900CF9989 /* Haptics.swift in Sources */,
+				9AE13A9428343BC7009A8229 /* Color.swift in Sources */,
 				9AA008A227C6B8DA00359374 /* GetIP.swift in Sources */,
-				9ADE8DCC27BEF33A00D52130 /* AudioHapticPixelData.swift in Sources */,
 				9A36E0FA27A86ED700CF9989 /* ContentView.swift in Sources */,
 				9A36E0F827A86ED700CF9989 /* kiwiApp.swift in Sources */,
 				9A545A452822D11D00F91457 /* PeakMeterView.swift in Sources */,
 				9ADE8DC627BEE5F500D52130 /* AudioHapticPixel.swift in Sources */,
-				9AA027A827FC998100177405 /* Bonjour.swift in Sources */,
 				9ADE8DC827BEE82300D52130 /* AudioHapticPixelView.swift in Sources */,
-				9ADE8DCA27BEF22500D52130 /* AudioHapticPixelList.swift in Sources */,
+				9AE13A9628343BD3009A8229 /* dB.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -17,14 +17,12 @@ import SwiftUI
 
 @main
 struct kiwiApp: App {
-    @StateObject var pixelData = PixelCollection()
     @StateObject var haptics = Haptics()
     
     var body: some Scene {
         
         WindowGroup {
             ContentView()
-                .environmentObject(pixelData)
                 .environmentObject(haptics)
                 .onAppear(perform: {
                     haptics.prepare()
