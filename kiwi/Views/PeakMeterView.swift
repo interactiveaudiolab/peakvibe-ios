@@ -31,10 +31,12 @@ struct PeakMeterView : View {
 
     var body: some View {
         HStack(alignment: .center) {
-            Text("Alert Threshold")
+            Text("Alert Threshold (dB)")
             Slider(value: $alertThreshold, in: -60.0...0.0)
-            Text("\(alertThreshold) dB")
+                .accessibilityValue(String(format: "%.2f dB", alertThreshold) )
         }
+        .accessibilityElement(children: .combine)
+            
         GeometryReader { geo in
             VStack {
                 Text("dB: \(amp2db(level))")
@@ -82,12 +84,8 @@ struct PeakMeterView : View {
             }
         }
         .accessibilityElement()
-//        .accessibilityLabel("")
-        .accessibilityLabel("\(Int(amp2db(level))) dB")
-//        .accessibility(addTraits: .allowsDirectInteraction)
-        
+        .accessibilityLabel("Peak Meter: \(Int(amp2db(level))) dB")
     }
-
     
     func clipAlert(_ dur: TimeInterval) {
         isClipping = true

@@ -9,31 +9,6 @@ import SwiftUI
 import SwiftUIOSC
 import dnssd
 
-struct OSCStatus: View {
-    @ObservedObject var osc: OSC = .shared
-    
-    var body: some View {
-        // Connection
-        HStack {
-            if osc.connection.isConnected {
-                Text("Connected on")
-            } else {
-                Text("Connection is")
-            }
-            switch osc.connection {
-            case .unknown:
-                Label("Unknown", systemImage: "wifi.exclamationmark")
-            case .offline:
-                Label("Offline", systemImage: "wifi.slash")
-            case .wifi:
-                Label("Wi-Fi", systemImage: "wifi")
-            case .cellular:
-                Label("Cellular", systemImage: "antenna.radiowaves.left.and.right")
-            }
-        }
-    }
-}
-
 struct OSCTestView: View {
     @ObservedObject var osc: OSC = .shared
     
@@ -101,13 +76,11 @@ struct OSCSettingsView: View {
             Group {
                 Divider()
                 Text("Connection Status")
-                    .background(Color.blue)
-                OSCStatus()
                 HStack {
                     Text("Local IP Address:")
                         .frame(width: 200, alignment: .trailing)
                     Text(UIDevice.current.getIP() ?? "No Wi-fi")
-                }
+                }.accessibilityElement(children: .combine)
                 
             }
             
@@ -119,9 +92,10 @@ struct OSCSettingsView: View {
                 HStack {
                     Text("IP Address:")
                         .frame(width: 200, alignment: .trailing)
-                    TextField("Address", text: $osc.clientAddress, onCommit: {
+                    TextField("IP Address", text: $osc.clientAddress, onCommit: {
                         UserDefaults.standard.set(osc.clientAddress, forKey: "clientAddress")
                     })
+                        .accessibilityHint("Double tap to edit IP address")
                         .border(Color.blue, width: 1.5)
                         .onAppear {
                             osc.clientAddress = UserDefaults.standard.string(forKey: "clientAddress") ?? "0.0.0.0"
