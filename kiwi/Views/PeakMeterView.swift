@@ -84,7 +84,7 @@ struct PeakMeterView : View {
             }
         }
         .accessibilityElement()
-        .accessibilityLabel("Peak Meter: \(Int(amp2db(level))) dB")
+        .accessibilityLabel("Peak Meter: \(Int(amp2db(level + 1e-5))) dB")
     }
     
     func clipAlert(_ dur: TimeInterval) {
