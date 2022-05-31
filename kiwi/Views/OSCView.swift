@@ -98,7 +98,7 @@ struct OSCSettingsView: View {
                         .accessibilityHint("Double tap to edit IP address")
                         .border(Color.blue, width: 1.5)
                         .onAppear {
-                            osc.clientAddress = UserDefaults.standard.string(forKey: "clientAddress") ?? "0.0.0.0"
+                            osc.clientAddress = UserDefaults.standard.string(forKey: "clientAddress") ?? ""
                             osc.clientPort = 8001;
                             osc.serverPort = 8000;
                         }

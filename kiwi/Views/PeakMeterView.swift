@@ -32,8 +32,9 @@ struct PeakMeterView : View {
     var body: some View {
         HStack(alignment: .center) {
             Text("Alert Threshold (dB)")
-            Slider(value: $alertThreshold, in: -60.0...0.0)
+            Slider(value: $alertThreshold, in: -60.0...0.0, step: 1.5)
                 .accessibilityValue(String(format: "%.2f dB", alertThreshold) )
+                
         }
         .accessibilityElement(children: .combine)
             
