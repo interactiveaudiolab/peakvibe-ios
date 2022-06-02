@@ -70,12 +70,41 @@ struct OSCTestView: View {
 struct OSCSettingsView: View {
     @ObservedObject var osc: OSC = .shared
     
+    let ConnectionStatusTimer = Timer.publish(every: 5,
+                                              tolerance: 0.5,
+                                              on: .main,
+                                              in: .common).autoconnect()
+    @State private var connected: Bool = false
+    
     var body: some View {
         VStack {
             // status
             Group {
                 Divider()
-                Text("Connection Status")
+                HStack {
+                    Text("Connection Status: ")
+                    Text(connected ? "connected" : "not connected")
+                }.accessibilityElement(children: .combine)
+                .onReceive(ConnectionStatusTimer) { time in
+                    var hasReceivedAck = false
+                    
+                    // deal with a timeout
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.5) {
+                        if !(hasReceivedAck) {
+                            connected = false
+                        }
+                    }
+                    
+                    // send a ping
+                    osc.send(true, at: "/ping")
+                    
+                    // wait for acknowledgement
+                    osc.receive(on: "/ping_ack") { values in
+                        hasReceivedAck = true
+                        connected = true
+                    }
+                    
+                }
                 HStack {
                     Text("Local IP Address:")
                         .frame(width: 200, alignment: .trailing)

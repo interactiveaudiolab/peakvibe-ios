@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftUIOSC
 //
 //public func print(_ object: Any...) {
 ////    #if DEBUGGING
@@ -18,6 +19,7 @@ import SwiftUI
 @main
 struct kiwiApp: App {
     @StateObject var haptics = Haptics()
+    @ObservedObject var osc: OSC = .shared
     
     var body: some Scene {
         
@@ -26,8 +28,12 @@ struct kiwiApp: App {
                 .environmentObject(haptics)
                 .onAppear(perform: {
                     haptics.prepare()
+                    // handle pings
+                    osc.receive(on: "/ping") { values in
+                        // acknowledge the ping
+                        osc.send(true, at: "/ping_ack")
+                    }
                 })
-                
         }
     }
 }
