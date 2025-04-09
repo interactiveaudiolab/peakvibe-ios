@@ -26,3 +26,9 @@ vibrate, mapping each loudness value to a corresponding haptic intensity on the 
 in realtime. Using this setup, the intensity of the loudness waveform is communicated through 
 the vibration intensity of the iPhone’s haptic motor, unblocking the user’s auditory channel 
 to listen to their audio production, not screen reader announcements.  
+
+## Building PeakVibe
+
+## Installing PeakVibe
+
+## Connecting PeakVibe to Reaper
