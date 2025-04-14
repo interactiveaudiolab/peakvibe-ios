@@ -27,8 +27,15 @@ in realtime. Using this setup, the intensity of the loudness waveform is communi
 the vibration intensity of the iPhone’s haptic motor, unblocking the user’s auditory channel 
 to listen to their audio production, not screen reader announcements.  
 
-## Building PeakVibe
+## Installing and Building PeakVibe
 
-## Installing PeakVibe
+To install, you will need a Mac with [XCode](https://developer.apple.com/xcode/). 
+
+After installing XCode, open `kiwi.xcodeproj` with XCode, plug in an iPhone X (or newer) to your Mac, select the iPhone as a build target, and build the PeakVibe app. 
+
+If building was successful, a new app (called `kiwi` should show up on your iPhone's screen). 
 
 ## Connecting PeakVibe to Reaper
+
+To connect to [PeakVibe-REAPER](https://github.com/interactiveaudiolab/peakvibe-reaper/blob/main/README.md), you must copy your laptop's local IP address and type it into 
+PeakVibe's settings menu. Likewise, copy your iPhone's local IP address (which you can see in PeakVibe's settings), and type it into `PeakVibe-REAPER` upon starting up REAPER. 
